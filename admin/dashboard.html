@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,25 +22,34 @@
 
         <div class="sidebar-label">MAIN MENU</div>
 
-        <nav class="navigation">
-            <button class="nav-link active" data-section="overview">▦ <span>Overview</span></button>
-            <button class="nav-link" data-section="profile">♙ <span>Personal Profile</span></button>
-            <button class="nav-link" data-section="education">▤ <span>Education</span></button>
-            <button class="nav-link" data-section="experience">▣ <span>Experience</span></button>
-            <button class="nav-link" data-section="achievements">★ <span>Achievements</span></button>
-            <button class="nav-link" data-section="contacts">☎ <span>Contact Details</span></button>
-            <button class="nav-link" data-section="social">◎ <span>Social Media</span></button>
-            <button class="nav-link" data-section="appearance">◈ <span>Appearance</span></button>
-        </nav>
+       <nav class="navigation">
+    <button class="nav-link active" data-section="overview">▦ <span>Overview</span></button>
+    <button class="nav-link" data-section="profile">♙ <span>Personal Profile</span></button>
+    <button class="nav-link" data-section="education">▤ <span>Education</span></button>
+    <button class="nav-link" data-section="experience">▣ <span>Experience</span></button>
+    <button class="nav-link" data-section="achievements">★ <span>Achievements</span></button>
+    <button class="nav-link" data-section="contacts">☎ <span>Contact Details</span></button>
+    <button class="nav-link" data-section="social">◎ <span>Social Media</span></button>
+
+    <!-- ADD THIS BUTTON -->
+    <button class="nav-link" data-section="logo">
+        ◉ <span>Website Logo</span>
+    </button>
+
+    <button class="nav-link" data-section="appearance">◈ <span>Appearance</span></button>
+</nav>
 
         <div class="sidebar-bottom">
             <a href="../index.html" target="_blank">↗ View Public Card</a>
+        
             <button id="logoutButton">⇥ Logout</button>
         </div>
     </aside>
 
     <main class="main-content">
-
+      <button class="nav-link" data-section="logo">
+    ◉ <span>Website Logo</span>
+</button>
         <header class="topbar">
             <button class="menu-toggle" id="menuToggle">☰</button>
             <div>
@@ -496,9 +504,40 @@
                 </div>
             </section>
 
-           <!-- APPEARANCE SETTINGS -->
-<section class="admin-section" id="appearance">
+            <!-- LOGO MANAGEMENT -->
+<section class="admin-section" id="logo">
+    <div class="section-intro">
+        <h2>Website Logo</h2>
+       <p>Upload and manage your main digital card branding logo.</p>
+    </div>
 
+    <form id="logoForm">
+        <div class="form-group">
+            <label for="logoInput">Select Logo</label>
+            <input
+                type="file"
+                id="logoInput"
+                accept="image/png,image/jpeg,image/webp"
+            >
+        </div>
+
+        <div class="form-group">
+            <label>Logo Preview</label>
+            <img
+                id="logoPreview"
+                src=""
+                alt="Logo Preview"
+                style="display:none; width:100px; height:100px; object-fit:contain; background:#fff; padding:8px; border-radius:8px;"
+            >
+        </div>
+
+        <button type="submit" class="primary-button" id="saveLogo">
+            Upload Logo
+        </button>
+    </form>
+</section>
+ <!-- APPEARANCE SETTINGS -->
+     <section class="admin-section" id="appearance">
     <div class="section-intro">
         <h2>Appearance Settings</h2>
         <p>Control which sections visitors can see on your public digital card.</p>
@@ -571,6 +610,7 @@
     </div>
 
 </section>
+
         </div>
 
         <footer class="dashboard-footer">
