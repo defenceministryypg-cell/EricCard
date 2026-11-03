@@ -655,20 +655,35 @@ async function loadProfile() {
 
     generateQR();
 }
-
 function displayMainLogo(profile) {
+    // MAIN HEADER LOGO
     const logo = document.getElementById("mainLogo");
     const fallback = document.getElementById("mainLogoFallback");
 
-    if (!logo || !fallback) return;
+    if (logo && fallback) {
+        if (profile.logo_url) {
+            logo.src = profile.logo_url;
+            logo.hidden = false;
+            fallback.hidden = true;
+        } else {
+            logo.hidden = true;
+            fallback.hidden = false;
+        }
+    }
 
-    if (profile.logo_url) {
-        logo.src = profile.logo_url;
-        logo.hidden = false;
-        fallback.hidden = true;
-    } else {
-        logo.hidden = true;
-        fallback.hidden = false;
+    // FOOTER LOGO
+    const footerLogo = document.getElementById("footerLogo");
+    const footerFallback = document.getElementById("footerLogoFallback");
+
+    if (footerLogo && footerFallback) {
+        if (profile.logo_url) {
+            footerLogo.src = profile.logo_url;
+            footerLogo.hidden = false;
+            footerFallback.hidden = true;
+        } else {
+            footerLogo.hidden = true;
+            footerFallback.hidden = false;
+        }
     }
 }
 
