@@ -504,6 +504,7 @@ function displayProfile(profile) {
 
     renderSocialLinks(profile.social_links || {});
     applyAppearanceSettings(profile.appearance);
+    displayMainLogo(profile);
 }
 
 
@@ -654,6 +655,21 @@ async function loadProfile() {
     generateQR();
 }
 
+function displayMainLogo(profile) {
+    const logo = document.getElementById("mainLogo");
+    const fallback = document.getElementById("mainLogoFallback");
+
+    if (!logo || !fallback) return;
+
+    if (profile.logo_url) {
+        logo.src = profile.logo_url;
+        logo.hidden = false;
+        fallback.hidden = true;
+    } else {
+        logo.hidden = true;
+        fallback.hidden = false;
+    }
+}
 
 /* =====================================
    INITIALIZE
