@@ -67,6 +67,7 @@ const navTitles = {
     achievements: "Leadership & Achievements",
     contacts: "Contact Details",
     social: "Social Media",
+    logo: "Website Logo",
     appearance: "Appearance Settings"
 };
 
@@ -182,6 +183,7 @@ async function loadProfile() {
         loadContactDetails();
         loadSocialLinks();
         loadAppearanceSettings();
+        loadLogo();
 
         showToast("Profile loaded successfully.");
 
@@ -1859,6 +1861,109 @@ document.getElementById("appearanceForm")?.addEventListener(
     }
 );
 
+// =====================================
+// WEBSITE LOGO MANAGEMENT
+// =====================================
+
+const logoInput = document.getElementById("logoInput");
+const logoPreview = document.getElementById("logoPreview");
+const logoForm = document.getElementById("logoForm");
+
+let selectedLogoFile = null;
+
+// Load existing logo
+function loadLogo() {
+    if (currentProfile?.logo_url) {
+        logoPreview.src = currentProfile.logo_url;
+        logoPreview.style.display = "block";
+    }
+}
+
+// Preview selected logo
+logoInput?.addEventListener("change", function () {
+    const file = this.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        showToast("Please select a valid image.");
+        return;
+    }
+
+    selectedLogoFile = file;
+
+    logoPreview.src = URL.createObjectURL(file);
+    logoPreview.style.display = "block";
+});
+
+// Upload and save logo
+logoForm?.addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    const button = document.getElementById("saveLogo");
+
+    if (!selectedLogoFile) {
+        showToast("Please select a logo first.");
+        return;
+    }
+
+    try {
+        button.disabled = true;
+        button.textContent = "Uploading...";
+
+        if (!(await hasAdminSession())) {
+            throw new Error("Administrator access required.");
+        }
+
+        const fileExtension = selectedLogoFile.name.split(".").pop();
+        const filePath = `website-logo-${Date.now()}.${fileExtension}`;
+
+        // Upload logo to Supabase Storage
+        const { error: uploadError } = await db.storage
+            .from("profile-images")
+            .upload(filePath, selectedLogoFile, {
+                cacheControl: "3600",
+                upsert: false
+            });
+
+        if (uploadError) throw uploadError;
+
+        // Get public URL
+        const { data: urlData } = db.storage
+            .from("profile-images")
+            .getPublicUrl(filePath);
+
+        const logoURL = urlData.publicUrl;
+
+        // Save logo URL in profiles table
+        const { data, error } = await db
+            .from("profiles")
+            .update({
+                logo_url: logoURL,
+                updated_at: new Date().toISOString()
+            })
+            .eq("singleton", true)
+            .select()
+            .single();
+
+        if (error) throw error;
+
+        currentProfile = data;
+        selectedLogoFile = null;
+        logoInput.value = "";
+
+        loadLogo();
+
+        showToast("Website logo uploaded successfully!");
+
+    } catch (error) {
+        console.error("Logo upload error:", error);
+        showToast(error.message || "Logo upload failed.");
+    } finally {
+        button.disabled = false;
+        button.textContent = "Upload Logo";
+    }
+});
 // Load the profile after admin.js has been loaded
 // by the protected dashboard.
 loadProfile();
