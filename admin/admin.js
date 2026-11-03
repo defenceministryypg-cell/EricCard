@@ -1775,9 +1775,10 @@ document.querySelector("#social .primary-button")?.addEventListener(
     }
 );
 
+
 /* =====================================
-   APPEARANCE SETTINGS
-   SUPABASE JSONB STORAGE
+   APPEARANCE AND THEME SETTINGS
+   Stored in profiles.appearance JSONB
 ===================================== */
 
 const defaultAppearance = {
@@ -1789,27 +1790,77 @@ const defaultAppearance = {
     showSocial: true
 };
 
+const defaultTheme = {
+    preset: "navy-gold",
+    mode: "dark",
+    colors: {
+        primary: "#172438",
+        secondary: "#D6B978",
+        background: "#0F172A",
+        surface: "#172438",
+        text: "#F8FAFC",
+        accent: "#D6B978"
+    }
+};
 
-// LOAD SETTINGS INTO DASHBOARD
-
-function loadAppearanceSettings() {
-    const settings = {
-        ...defaultAppearance,
-        ...(currentProfile?.appearance || {})
+// APPLY THEME TO THE CURRENT DASHBOARD
+function applyTheme(theme = {}) {
+    const colors = {
+        ...defaultTheme.colors,
+        ...(theme.colors || {})
     };
 
-    Object.entries(settings).forEach(([key, value]) => {
+    const root = document.documentElement;
+
+    root.style.setProperty("--theme-primary", colors.primary);
+    root.style.setProperty("--theme-secondary", colors.secondary);
+    root.style.setProperty("--theme-background", colors.background);
+    root.style.setProperty("--theme-surface", colors.surface);
+    root.style.setProperty("--theme-text", colors.text);
+    root.style.setProperty("--theme-accent", colors.accent);
+
+    root.dataset.themeMode = theme.mode || "dark";
+}
+
+// LOAD APPEARANCE AND THEME SETTINGS
+function loadAppearanceSettings() {
+    const savedAppearance = currentProfile?.appearance || {};
+
+    Object.entries(defaultAppearance).forEach(([key, defaultValue]) => {
         const checkbox = document.getElementById(key);
 
         if (checkbox) {
-            checkbox.checked = Boolean(value);
+            checkbox.checked =
+                savedAppearance[key] ?? defaultValue;
         }
+    });
+
+    const theme = {
+        ...defaultTheme,
+        ...(savedAppearance.theme || {}),
+        colors: {
+            ...defaultTheme.colors,
+            ...(savedAppearance.theme?.colors || {})
+        }
+    };
+
+    applyTheme(theme);
+
+    // Populate theme controls when added to dashboard
+    const preset = document.getElementById("themePreset");
+    const mode = document.getElementById("themeMode");
+
+    if (preset) preset.value = theme.preset;
+    if (mode) mode.value = theme.mode;
+
+    Object.entries(theme.colors).forEach(([key, value]) => {
+        const input = document.getElementById(`theme${key.charAt(0).toUpperCase()}${key.slice(1)}`);
+
+        if (input) input.value = value;
     });
 }
 
-
-// SAVE SETTINGS TO SUPABASE
-
+// SAVE APPEARANCE WITHOUT OVERWRITING THE THEME
 document.getElementById("appearanceForm")?.addEventListener(
     "submit",
     async event => {
@@ -1817,15 +1868,25 @@ document.getElementById("appearanceForm")?.addEventListener(
 
         const button = event.submitter;
 
-        const settings = {};
+        const existingAppearance = currentProfile?.appearance || {};
+
+        const settings = {
+            ...existingAppearance
+        };
 
         Object.keys(defaultAppearance).forEach(key => {
-            settings[key] = document.getElementById(key).checked;
+            const checkbox = document.getElementById(key);
+
+            if (checkbox) {
+                settings[key] = checkbox.checked;
+            }
         });
 
         try {
-            button.disabled = true;
-            button.textContent = "Saving...";
+            if (button) {
+                button.disabled = true;
+                button.textContent = "Saving...";
+            }
 
             if (!(await hasAdminSession())) {
                 throw new Error("Please sign in as administrator.");
@@ -1845,21 +1906,249 @@ document.getElementById("appearanceForm")?.addEventListener(
 
             currentProfile = data;
 
+            loadAppearanceSettings();
+
             showToast("Appearance settings saved successfully!");
 
         } catch (error) {
             console.error("Appearance settings error:", error);
-
-            showToast(
-                error.message || "Unable to save appearance settings."
-            );
+            showToast(error.message || "Unable to save appearance settings.");
 
         } finally {
-            button.disabled = false;
-            button.textContent = "Save Appearance Settings";
+            if (button) {
+                button.disabled = false;
+                button.textContent = "Save Appearance Settings";
+            }
         }
     }
 );
+
+
+/* =====================================
+   THEME CUSTOMIZATION
+   Stored inside profiles.appearance.theme
+===================================== */
+
+const themePresets = {
+    "navy-gold": {
+        primary: "#172438",
+        secondary: "#D6B978",
+        background: "#0F172A",
+        surface: "#172438",
+        text: "#F8FAFC",
+        accent: "#D6B978"
+    },
+
+    "midnight-blue": {
+        primary: "#101B35",
+        secondary: "#64B5F6",
+        background: "#080F20",
+        surface: "#14213D",
+        text: "#F1F5F9",
+        accent: "#64B5F6"
+    },
+
+    "white-navy": {
+        primary: "#172438",
+        secondary: "#C49B45",
+        background: "#F4F6FA",
+        surface: "#FFFFFF",
+        text: "#172438",
+        accent: "#C49B45"
+    },
+
+    "forest-gold": {
+        primary: "#173D32",
+        secondary: "#D6B978",
+        background: "#0D211B",
+        surface: "#173D32",
+        text: "#F4F8F5",
+        accent: "#D6B978"
+    }
+};
+
+// GET THEME FROM FORM
+function getThemeFromForm() {
+    return {
+        preset: document.getElementById("themePreset")?.value || "navy-gold",
+        mode: document.getElementById("themeMode")?.value || "dark",
+        colors: {
+            primary: document.getElementById("themePrimary")?.value || "#172438",
+            secondary: document.getElementById("themeSecondary")?.value || "#D6B978",
+            background: document.getElementById("themeBackground")?.value || "#0F172A",
+            surface: document.getElementById("themeSurface")?.value || "#172438",
+            text: document.getElementById("themeText")?.value || "#F8FAFC",
+            accent: document.getElementById("themeAccent")?.value || "#D6B978"
+        }
+    };
+}
+
+// PUT SELECTED COLOURS INTO FORM
+function populateThemeForm(theme) {
+    const preset = document.getElementById("themePreset");
+    const mode = document.getElementById("themeMode");
+
+    if (preset) preset.value = theme.preset || "navy-gold";
+    if (mode) mode.value = theme.mode || "dark";
+
+    const fields = {
+        themePrimary: theme.colors?.primary,
+        themeSecondary: theme.colors?.secondary,
+        themeBackground: theme.colors?.background,
+        themeSurface: theme.colors?.surface,
+        themeText: theme.colors?.text,
+        themeAccent: theme.colors?.accent
+    };
+
+    Object.entries(fields).forEach(([id, value]) => {
+        const input = document.getElementById(id);
+        if (input && value) input.value = value;
+    });
+}
+
+// LIVE THEME PREVIEW
+function updateThemePreview() {
+    const theme = getThemeFromForm();
+
+    applyTheme(theme);
+
+    const preview = document.querySelector(".theme-preview-card");
+
+    if (preview) {
+        preview.style.background = theme.colors.background;
+        preview.style.color = theme.colors.text;
+        preview.style.borderColor = theme.colors.secondary;
+
+        const logo = preview.querySelector(".theme-preview-header span");
+        if (logo) {
+            logo.style.background = theme.colors.primary;
+            logo.style.color = theme.colors.secondary;
+        }
+
+        const heading = preview.querySelector("h3");
+        if (heading) heading.style.color = theme.colors.secondary;
+
+        const button = preview.querySelector("button");
+        if (button) {
+            button.style.background = theme.colors.accent;
+            button.style.color = theme.colors.primary;
+        }
+    }
+}
+
+// APPLY PRESET TO COLOUR INPUTS
+document.getElementById("themePreset")?.addEventListener(
+    "change",
+    function () {
+        const preset = themePresets[this.value];
+
+        if (!preset) return;
+
+        populateThemeForm({
+            preset: this.value,
+            mode: document.getElementById("themeMode")?.value || "dark",
+            colors: preset
+        });
+
+        updateThemePreview();
+    }
+);
+
+// UPDATE PREVIEW WHEN COLOURS CHANGE
+[
+    "themePrimary",
+    "themeSecondary",
+    "themeBackground",
+    "themeSurface",
+    "themeText",
+    "themeAccent",
+    "themeMode"
+].forEach(id => {
+    document.getElementById(id)?.addEventListener(
+        "input",
+        updateThemePreview
+    );
+
+    document.getElementById(id)?.addEventListener(
+        "change",
+        updateThemePreview
+    );
+});
+
+// SAVE THEME TO EXISTING APPEARANCE JSONB
+document.getElementById("themeForm")?.addEventListener(
+    "submit",
+    async event => {
+        event.preventDefault();
+
+        const button = document.getElementById("saveTheme");
+        const theme = getThemeFromForm();
+
+        try {
+            if (button) {
+                button.disabled = true;
+                button.textContent = "Saving Theme...";
+            }
+
+            if (!(await hasAdminSession())) {
+                throw new Error("Please sign in as administrator.");
+            }
+
+            const existingAppearance = currentProfile?.appearance || {};
+
+            const updatedAppearance = {
+                ...existingAppearance,
+                theme
+            };
+
+            const { data, error } = await db
+                .from("profiles")
+                .update({
+                    appearance: updatedAppearance,
+                    updated_at: new Date().toISOString()
+                })
+                .eq("singleton", true)
+                .select()
+                .single();
+
+            if (error) throw error;
+
+            currentProfile = data;
+
+            applyTheme(theme);
+
+            showToast("Your theme has been saved successfully!");
+
+        } catch (error) {
+            console.error("Theme save error:", error);
+            showToast(error.message || "Unable to save theme.");
+
+        } finally {
+            if (button) {
+                button.disabled = false;
+                button.textContent = "Save Theme";
+            }
+        }
+    }
+);
+
+// RESET THEME TO NAVY AND GOLD
+document.getElementById("resetTheme")?.addEventListener(
+    "click",
+    () => {
+        const defaultTheme = {
+            preset: "navy-gold",
+            mode: "dark",
+            colors: themePresets["navy-gold"]
+        };
+
+        populateThemeForm(defaultTheme);
+        updateThemePreview();
+
+        showToast("Default theme restored in preview. Save Theme to apply it.");
+    }
+);
+
 
 // =====================================
 // WEBSITE LOGO MANAGEMENT
