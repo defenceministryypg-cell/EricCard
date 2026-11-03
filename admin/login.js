@@ -1,4 +1,3 @@
-
 const SUPABASE_URL = "https://mcpqobgxdjihkntphovi.supabase.co";
 
 const SUPABASE_KEY =
