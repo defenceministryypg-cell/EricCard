@@ -754,3 +754,26 @@ button { cursor: pointer; }
         padding: 17px;
     }
 }
+.brand-logo {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+}
+
+.brand-logo img[hidden],
+.brand-logo span[hidden] {
+    display: none !important;
+}
