@@ -398,6 +398,51 @@ function setSectionVisibility(elementId, visible) {
 }
 
 
+
+/* =====================================
+   PUBLIC DIGITAL CARD THEME
+   Loaded from profiles.appearance.theme
+===================================== */
+
+const defaultPublicTheme = {
+    preset: "navy-gold",
+    mode: "dark",
+    colors: {
+        primary: "#172438",
+        secondary: "#D6B978",
+        background: "#0F172A",
+        surface: "#172438",
+        text: "#F8FAFC",
+        accent: "#D6B978"
+    }
+};
+
+function applyPublicTheme(savedTheme = {}) {
+    const theme = {
+        ...defaultPublicTheme,
+        ...savedTheme,
+        colors: {
+            ...defaultPublicTheme.colors,
+            ...(savedTheme.colors || {})
+        }
+    };
+
+    const root = document.documentElement;
+    const colors = theme.colors;
+
+    root.style.setProperty("--theme-primary", colors.primary);
+    root.style.setProperty("--theme-secondary", colors.secondary);
+    root.style.setProperty("--theme-background", colors.background);
+    root.style.setProperty("--theme-surface", colors.surface);
+    root.style.setProperty("--theme-text", colors.text);
+    root.style.setProperty("--theme-accent", colors.accent);
+
+    root.dataset.themeMode = theme.mode || "dark";
+
+    console.log("Public theme applied:", theme.preset);
+}
+
+
 // APPLY APPEARANCE SETTINGS
 
 function applyAppearanceSettings(savedSettings = {}) {
@@ -504,8 +549,12 @@ function displayProfile(profile) {
 
     renderSocialLinks(profile.social_links || {});
     applyAppearanceSettings(profile.appearance);
-    displayMainLogo(profile);
-    
+
+applyPublicTheme(
+    profile.appearance?.theme || defaultPublicTheme
+);
+
+displayMainLogo(profile);
 }
 
 
