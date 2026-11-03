@@ -505,6 +505,7 @@ function displayProfile(profile) {
     renderSocialLinks(profile.social_links || {});
     applyAppearanceSettings(profile.appearance);
     displayMainLogo(profile);
+    
 }
 
 
@@ -670,6 +671,7 @@ function displayMainLogo(profile) {
         fallback.hidden = false;
     }
 }
+
 
 /* =====================================
    INITIALIZE
