@@ -1871,37 +1871,53 @@ const logoForm = document.getElementById("logoForm");
 
 let selectedLogoFile = null;
 
-// Load existing logo
-// Load existing logo in dashboard preview and sidebar
+
+// LOAD LOGO IN ALL ADMIN DASHBOARD LOCATIONS
 function loadLogo() {
+
+    const logoURL = currentProfile?.logo_url;
+
+    // Dashboard logo preview
+    if (logoPreview) {
+        if (logoURL) {
+            logoPreview.src = logoURL;
+            logoPreview.style.display = "block";
+        } else {
+            logoPreview.removeAttribute("src");
+            logoPreview.style.display = "none";
+        }
+    }
+
+    // Sidebar logo
     const adminLogo = document.getElementById("adminSidebarLogo");
     const adminFallback = document.getElementById("adminSidebarLogoFallback");
 
-    if (currentProfile?.logo_url) {
-
-        // Dashboard logo preview
-        if (logoPreview) {
-            logoPreview.src = currentProfile.logo_url;
-            logoPreview.style.display = "block";
-        }
-
-        // Admin sidebar logo
-        if (adminLogo && adminFallback) {
-            adminLogo.src = currentProfile.logo_url;
+    if (adminLogo && adminFallback) {
+        if (logoURL) {
+            adminLogo.src = logoURL;
             adminLogo.hidden = false;
             adminFallback.hidden = true;
-        }
-
-    } else {
-
-        // Show EA fallback if no logo exists
-        if (adminLogo && adminFallback) {
+        } else {
             adminLogo.hidden = true;
             adminFallback.hidden = false;
         }
     }
-}
 
+    // Welcome card logo
+    const welcomeLogo = document.getElementById("adminWelcomeLogo");
+    const welcomeFallback = document.getElementById("adminWelcomeLogoFallback");
+
+    if (welcomeLogo && welcomeFallback) {
+        if (logoURL) {
+            welcomeLogo.src = logoURL;
+            welcomeLogo.hidden = false;
+            welcomeFallback.hidden = true;
+        } else {
+            welcomeLogo.hidden = true;
+            welcomeFallback.hidden = false;
+        }
+    }
+}
 // Preview selected logo
 logoInput?.addEventListener("change", function () {
     const file = this.files[0];
