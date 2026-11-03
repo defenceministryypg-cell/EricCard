@@ -1872,10 +1872,33 @@ const logoForm = document.getElementById("logoForm");
 let selectedLogoFile = null;
 
 // Load existing logo
+// Load existing logo in dashboard preview and sidebar
 function loadLogo() {
+    const adminLogo = document.getElementById("adminSidebarLogo");
+    const adminFallback = document.getElementById("adminSidebarLogoFallback");
+
     if (currentProfile?.logo_url) {
-        logoPreview.src = currentProfile.logo_url;
-        logoPreview.style.display = "block";
+
+        // Dashboard logo preview
+        if (logoPreview) {
+            logoPreview.src = currentProfile.logo_url;
+            logoPreview.style.display = "block";
+        }
+
+        // Admin sidebar logo
+        if (adminLogo && adminFallback) {
+            adminLogo.src = currentProfile.logo_url;
+            adminLogo.hidden = false;
+            adminFallback.hidden = true;
+        }
+
+    } else {
+
+        // Show EA fallback if no logo exists
+        if (adminLogo && adminFallback) {
+            adminLogo.hidden = true;
+            adminFallback.hidden = false;
+        }
     }
 }
 
