@@ -1,14 +1,28 @@
 
+
 :root {
-    --background: #0b1220;
-    --surface: #121e30;
-    --surface-light: #19283d;
-    --gold: #d6b978;
-    --gold-light: #f0dca8;
-    --white: #f7f7f5;
-    --muted: #a4afbd;
-    --border: rgba(214,185,120,.19);
+    /* Dynamic theme colours from Supabase */
+    --background: var(--theme-background, #0b1220);
+    --surface: var(--theme-surface, #121e30);
+    --surface-light: var(--theme-primary, #19283d);
+
+    --gold: var(--theme-secondary, #d6b978);
+    --gold-light: var(--theme-accent, #f0dca8);
+
+    --white: var(--theme-text, #f7f7f5);
+    --muted: color-mix(
+        in srgb,
+        var(--theme-text, #f7f7f5) 65%,
+        transparent
+    );
+
+    --border: color-mix(
+        in srgb,
+        var(--theme-secondary, #d6b978) 19%,
+        transparent
+    );
 }
+
 
 * {
     margin: 0;
@@ -577,4 +591,110 @@ footer span, footer small { display: block; color: var(--muted); font-size: 11px
     height: 100%;
     object-fit: contain;
     object-position: center;
+}
+
+/* =========================================
+   DYNAMIC PUBLIC THEME INTEGRATION
+========================================= */
+
+/* Main page */
+body {
+    background: var(--background);
+    color: var(--white);
+}
+
+/* Header */
+.topbar {
+    background: var(--theme-primary, #0d1726);
+    color: var(--white);
+    border-color: var(--border);
+}
+
+/* Hero section */
+.hero {
+    background:
+        radial-gradient(
+            ellipse at 50% 25%,
+            var(--theme-primary, #263650) 0%,
+            transparent 55%
+        ),
+        linear-gradient(
+            140deg,
+            var(--theme-surface, #101e32),
+            var(--background) 75%
+        );
+}
+
+/* Profile photograph */
+.profile-frame {
+    background: var(--surface);
+    border-color: var(--gold);
+}
+
+/* Main content cards */
+.about-card,
+.info-card,
+.timeline-item,
+.contact-card {
+    background: var(--surface);
+    color: var(--white);
+    border-color: var(--border);
+}
+
+/* Experience section */
+.experience-section {
+    background: var(--theme-primary, #0e1929);
+}
+
+/* Contact section */
+.contact-section {
+    background: linear-gradient(
+        145deg,
+        var(--theme-primary, #14233a),
+        var(--background)
+    );
+}
+
+/* Footer */
+footer {
+    background: var(--theme-primary, #080e18);
+    color: var(--white);
+}
+
+/* Buttons */
+.btn-gold {
+    background: var(--theme-accent, #d6b978);
+    color: var(--theme-primary, #101827);
+}
+
+.btn-outline {
+    border-color: var(--theme-secondary, #d6b978);
+    color: var(--theme-secondary, #f0dca8);
+}
+
+/* Headings and highlights */
+.eyebrow,
+.section-label,
+.top-contact,
+.card-icon,
+.timeline-item small,
+.contact-card b {
+    color: var(--theme-secondary, #d6b978);
+}
+
+/* Theme transitions */
+body,
+.topbar,
+.hero,
+.about-card,
+.info-card,
+.timeline-item,
+.contact-card,
+.contact-section,
+.experience-section,
+footer {
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease;
 }
