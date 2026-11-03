@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Login | Eric Andoh</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+
+    <div class="login-card">
+        <div class="brand-logo">EA</div>
+
+        <span class="login-eyebrow">PRIVATE ADMINISTRATION</span>
+
+        <h1>Welcome Back</h1>
+
+        <p class="login-description">
+            Sign in to manage your professional digital identity.
+        </p>
+
+        <form id="loginForm">
+
+            <div class="form-group">
+                <label for="email">Administrator Email</label>
+                <input type="email" id="email"
+                       placeholder="Enter your email address"
+                       autocomplete="username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password"
+                       placeholder="Enter your password"
+                       autocomplete="current-password" required>
+            </div>
+
+            <button type="submit" class="primary-button" id="loginButton">
+                Sign In Securely
+            </button>
+
+            <p id="loginMessage" role="status"></p>
+
+        </form>
+
+        <a href="../index.html" class="back-link">
+            ← Back to Digital Profile
+        </a>
+
+        <div class="login-footer">
+            ERIC ANDOH · DIGITAL IDENTITY
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="login.js"></script>
+</body>
+</html>

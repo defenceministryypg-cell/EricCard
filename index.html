@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101827">
+    <meta name="description" content="Official digital profile and contact card of Hon. Eric Andoh.">
+    <title>Hon. Eric Andoh | Digital Profile</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="topbar">
+    <a href="#" class="brand">
+        <span class="brand-mark">EA</span>
+        <span>ERIC ANDOH</span>
+    </a>
+    <a href="#contact" class="top-contact">Get in touch <span>↗</span></a>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-content">
+            <div class="profile-frame">
+                <img id="profileImage" src="https://placehold.co/400x400/172438/D6B978?text=EA"
+                     alt="Hon. Eric Andoh">
+            </div>
+
+            <div class="availability">
+                <span class="status-dot"></span>
+                DIGITAL PROFESSIONAL PROFILE
+            </div>
+
+            <p class="eyebrow">WELCOME TO MY DIGITAL SPACE</p>
+
+            <h1 id="fullName">HON. ERIC ANDOH</h1>
+
+            <p class="hero-title" id="headline">
+                Youth Leader | IT Professional | Entrepreneur
+            </p>
+
+            <p class="position" id="jobTitle">
+                Minister for Defence, Youth Parliament Ghana
+            </p>
+
+            <p class="location" id="location">📍 Ghana</p>
+
+            <div class="hero-buttons">
+                <a id="callButton" href="tel:+233542044490" class="btn btn-gold">
+                    ☎ Call Me
+                </a>
+                <a id="whatsappButton" href="https://wa.me/233542044490"
+                   target="_blank" rel="noopener" class="btn btn-outline">
+                    WhatsApp
+                </a>
+            </div>
+
+            <button class="save-contact" id="saveContact">
+                ↓ Save My Contact
+            </button>
+        </div>
+
+        <div class="hero-bottom">LEADERSHIP · TECHNOLOGY · SERVICE</div>
+    </section>
+
+    <section class="section about-section" id="about">
+        <div class="section-heading">
+            <span class="section-label">01 / ABOUT</span>
+            <h2>A little about me.</h2>
+        </div>
+        <div class="about-card">
+            <p id="biography">
+                Welcome to my professional digital profile. Explore my
+                background, leadership journey, education and professional work.
+            </p>
+        </div>
+    </section>
+
+    <section class="section" id="education">
+        <div class="section-heading">
+            <span class="section-label">02 / EDUCATION</span>
+            <h2>Education & Qualifications</h2>
+        </div>
+        <div id="educationList" class="info-grid">
+            <article class="info-card">
+                <span class="card-icon">01</span>
+                <h3>BSc Information Technology</h3>
+                <p>Ghana Communication Technology University</p>
+            </article>
+            <article class="info-card">
+                <span class="card-icon">02</span>
+                <h3>Diploma in Cybersecurity</h3>
+                <p>Professional qualification</p>
+            </article>
+            <article class="info-card">
+                <span class="card-icon">03</span>
+                <h3>Hardware & Satellite Engineering</h3>
+                <p>Professional qualification</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section experience-section" id="experience">
+        <div class="section-heading">
+            <span class="section-label">03 / EXPERIENCE</span>
+            <h2>Professional Journey</h2>
+        </div>
+        <div id="experienceList" class="timeline">
+            <p class="empty-state">Professional experience will appear here.</p>
+        </div>
+    </section>
+
+    <section class="section" id="achievements">
+        <div class="section-heading">
+            <span class="section-label">04 / ACHIEVEMENTS</span>
+            <h2>Leadership & Achievements</h2>
+        </div>
+        <div id="achievementsList" class="achievement-list">
+            <p class="empty-state">Achievements will appear here.</p>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="section-heading">
+            <span class="section-label">05 / CONNECT</span>
+            <h2>Let's connect.</h2>
+            <p>For professional engagements, collaborations and enquiries.</p>
+        </div>
+
+        <div class="contact-grid">
+            <a id="contactPhone" href="tel:+233542044490" class="contact-card">
+                <span>☎</span>
+                <div><small>CALL DIRECTLY</small><strong>0542044490</strong></div>
+                <b>↗</b>
+            </a>
+            <a id="contactWhatsapp" href="https://wa.me/233542044490"
+               target="_blank" rel="noopener" class="contact-card">
+                <span>◉</span>
+                <div><small>WHATSAPP</small><strong>Send a message</strong></div>
+                <b>↗</b>
+            </a>
+            <a id="contactEmail" href="#" class="contact-card" hidden>
+                <span>✉</span>
+                <div><small>EMAIL</small><strong id="emailText">Email me</strong></div>
+                <b>↗</b>
+            </a>
+            <a id="contactWebsite" href="#" target="_blank" rel="noopener"
+               class="contact-card" hidden>
+                <span>◎</span>
+                <div><small>WEBSITE</small><strong>Visit my website</strong></div>
+                <b>↗</b>
+            </a>
+        </div>
+
+        <div class="social-links" id="socialLinks"></div>
+
+       <div class="qr-card">
+    <div class="qr-heading">
+        <h3>SCAN MY DIGITAL CARD</h3>
+        <p>Scan to view my professional profile and contact details.</p>
+    </div>
+
+    <div class="qr-code-wrapper">
+        <div id="qrcode"></div>
+        <div class="qr-logo">EA</div>
+    </div>
+
+    <p class="qr-caption">HON. ERIC ANDOH</p>
+
+    <div class="qr-actions">
+        <button type="button" id="downloadQR">
+            Download QR Code
+        </button>
+    </div>
+</div>
+    </section>
+</main>
+
+<footer>
+    <div class="footer-mark">EA</div>
+    <p>HON. ERIC ANDOH</p>
+    <span>© <span id="year"></span> All rights reserved.</span>
+    <small>Designed as a professional digital identity.</small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

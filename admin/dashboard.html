@@ -1,0 +1,627 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Eric Andoh</title>
+    <link rel="stylesheet" href="admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <div class="brand-logo">EA</div>
+            <div>
+                <h3>ERIC ANDOH</h3>
+                <small>PROFILE MANAGER</small>
+            </div>
+        </div>
+
+        <div class="sidebar-label">MAIN MENU</div>
+
+        <nav class="navigation">
+            <button class="nav-link active" data-section="overview">▦ <span>Overview</span></button>
+            <button class="nav-link" data-section="profile">♙ <span>Personal Profile</span></button>
+            <button class="nav-link" data-section="education">▤ <span>Education</span></button>
+            <button class="nav-link" data-section="experience">▣ <span>Experience</span></button>
+            <button class="nav-link" data-section="achievements">★ <span>Achievements</span></button>
+            <button class="nav-link" data-section="contacts">☎ <span>Contact Details</span></button>
+            <button class="nav-link" data-section="social">◎ <span>Social Media</span></button>
+            <button class="nav-link" data-section="appearance">◈ <span>Appearance</span></button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <a href="../index.html" target="_blank">↗ View Public Card</a>
+            <button id="logoutButton">⇥ Logout</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <button class="menu-toggle" id="menuToggle">☰</button>
+            <div>
+                <h2 id="pageTitle">Dashboard Overview</h2>
+                <p>Manage your professional digital identity.</p>
+            </div>
+            <a href="../index.html" target="_blank" class="view-card">View Card ↗</a>
+        </header>
+
+        <div class="content-area">
+
+            <!-- OVERVIEW -->
+            <section class="admin-section active" id="overview">
+                <div class="welcome-card">
+                    <div>
+                        <span>WELCOME TO YOUR ADMIN PANEL</span>
+                        <h1>Good to see you, Eric.</h1>
+                        <p>Manage your profile, professional information and public contact details from here.</p>
+                    </div>
+                    <div class="welcome-logo">EA</div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span>PROFILE STATUS</span>
+                        <h2>Active</h2>
+                        <small>Your profile is available for editing</small>
+                    </div>
+                    <div class="stat-card">
+                        <span>CONTACT NUMBER</span>
+                        <h2>0542044490</h2>
+                        <small>Public contact number</small>
+                    </div>
+                    <div class="stat-card">
+                        <span>STORAGE</span>
+                        <h2>Supabase</h2>
+                        <small>Profile database and images</small>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <h3>Quick Management</h3>
+                    <p>Choose what you want to update.</p>
+                    <div class="quick-actions">
+                        <button data-go="profile">Update Profile</button>
+                        <button data-go="education">Manage Education</button>
+                        <button data-go="experience">Update Experience</button>
+                        <button data-go="contacts">Edit Contact Details</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PROFILE -->
+            
+<section class="admin-section" id="profile">
+    <div class="section-intro">
+        <h2>Personal Profile</h2>
+        <p>Manage your name, official position, biography and photograph.</p>
+    </div>
+
+    <div class="panel">
+        <h3>Profile Photograph</h3>
+        <div class="photo-upload">
+            <img id="photoPreview"
+                 src="https://placehold.co/140x140/172438/D6B978?text=EA"
+                 alt="Profile preview">
+
+            <div>
+                <label class="upload-button" for="photoInput">
+                    Choose Photograph
+                </label>
+                <input type="file" id="photoInput"
+                       accept="image/jpeg,image/png,image/webp" hidden>
+                <p>JPG, PNG or WebP. Maximum 5MB.</p>
+                <small id="photoStatus">No new photograph selected.</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h3>Basic Information</h3>
+
+        <form id="profileForm">
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input id="fullName" required
+                           value="HON. ERIC ANDOH">
+                </div>
+
+                <div class="form-group">
+                    <label>Official Position</label>
+                    <input id="jobTitle"
+                           value="Minister for Defence, Youth Parliament Ghana">
+                </div>
+
+                <div class="form-group full">
+                    <label>Professional Headline</label>
+                    <input id="headline"
+                           value="Youth Leader | IT Professional | Entrepreneur">
+                </div>
+
+                <div class="form-group full">
+                    <label>Biography</label>
+                    <textarea id="biography" rows="7"
+                              placeholder="Write your professional biography..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Location</label>
+                    <input id="location" value="Ghana">
+                </div>
+
+            </div>
+
+            <button type="submit" class="primary-button" id="saveProfile">
+                Save Profile Changes
+            </button>
+        </form>
+    </div>
+</section>
+
+            <!-- EDUCATION -->
+           
+<!-- EDUCATION MANAGEMENT -->
+<section class="admin-section" id="education">
+
+    <div class="section-intro">
+        <h2>Education & Qualifications</h2>
+        <p>Manage your academic background and professional qualifications.</p>
+    </div>
+
+    <div class="panel">
+        <h3 id="educationFormTitle">Add Qualification</h3>
+
+        <form id="educationForm">
+            <input type="hidden" id="educationId">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="educationTitle">Qualification</label>
+                    <input
+                        type="text"
+                        id="educationTitle"
+                        placeholder="e.g. BSc Information Technology"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="educationInstitution">Institution</label>
+                    <input
+                        type="text"
+                        id="educationInstitution"
+                        placeholder="e.g. Ghana Communication Technology University"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="educationYear">Year</label>
+                    <input
+                        type="text"
+                        id="educationYear"
+                        placeholder="e.g. 2027">
+                </div>
+
+            </div>
+
+            <div class="education-actions">
+                <button type="submit" class="primary-button" id="educationSaveButton">
+                    Add Qualification
+                </button>
+
+                <button type="button" class="cancel-button"
+                        id="cancelEducation" hidden>
+                    Cancel Edit
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <div>
+                <h3>My Qualifications</h3>
+                <p>All qualifications saved to your digital profile.</p>
+            </div>
+            <span class="record-count" id="educationCount">0 Records</span>
+        </div>
+
+        <div id="educationAdminList" class="education-admin-list">
+            <p class="empty-state">Loading qualifications...</p>
+        </div>
+    </div>
+
+</section>
+
+
+         
+<!-- EXPERIENCE MANAGEMENT -->
+<section class="admin-section" id="experience">
+
+    <div class="section-intro">
+        <h2>Professional Experience</h2>
+        <p>Manage your employment, entrepreneurship and leadership experience.</p>
+    </div>
+
+    <div class="panel">
+        <h3 id="experienceFormTitle">Add Professional Experience</h3>
+
+        <form id="experienceForm">
+
+            <input type="hidden" id="experienceId">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="experienceTitle">Position / Job Title</label>
+                    <input type="text" id="experienceTitle"
+                           placeholder="e.g. Computer Teacher" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="experienceOrganization">Organization</label>
+                    <input type="text" id="experienceOrganization"
+                           placeholder="e.g. Antah Academy" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="experienceStart">Start Date</label>
+                    <input type="date" id="experienceStart">
+                </div>
+
+                <div class="form-group">
+                    <label for="experienceEnd">End Date</label>
+                    <input type="date" id="experienceEnd">
+                </div>
+
+                <div class="form-group full">
+                    <label class="current-role-label">
+                        <input type="checkbox" id="experienceCurrent">
+                        I currently hold this position
+                    </label>
+                </div>
+
+                <div class="form-group full">
+                    <label for="experienceDescription">Responsibilities / Description</label>
+                    <textarea id="experienceDescription" rows="5"
+                        placeholder="Describe your role, responsibilities and contributions..."></textarea>
+                </div>
+
+            </div>
+
+            <div class="education-actions">
+                <button type="submit" class="primary-button"
+                        id="experienceSaveButton">
+                    Add Experience
+                </button>
+
+                <button type="button" class="cancel-button"
+                        id="cancelExperience" hidden>
+                    Cancel Edit
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="panel">
+        <div class="panel-heading">
+            <div>
+                <h3>My Professional Experience</h3>
+                <p>Your professional and leadership records.</p>
+            </div>
+
+            <span class="record-count" id="experienceCount">0 Records</span>
+        </div>
+
+        <div id="experienceAdminList" class="experience-admin-list">
+            <p class="empty-state">Loading experience records...</p>
+        </div>
+    </div>
+
+</section>
+
+
+           <!-- ACHIEVEMENTS MANAGEMENT -->
+<section class="admin-section" id="achievements">
+
+    <div class="section-intro">
+        <h2>Leadership & Achievements</h2>
+        <p>Manage your appointments, leadership positions, awards and accomplishments.</p>
+    </div>
+
+    <!-- ADD / EDIT ACHIEVEMENT -->
+    <div class="panel">
+
+        <h3 id="achievementFormTitle">Add Achievement</h3>
+
+        <form id="achievementForm">
+
+            <input type="hidden" id="achievementId">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="achievementTitle">Title / Position</label>
+                    <input
+                        type="text"
+                        id="achievementTitle"
+                        placeholder="e.g. Minister for Defence"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="achievementOrganization">Organization</label>
+                    <input
+                        type="text"
+                        id="achievementOrganization"
+                        placeholder="e.g. Youth Parliament Ghana">
+                </div>
+
+                <div class="form-group">
+                    <label for="achievementDate">Date / Year</label>
+                    <input
+                        type="text"
+                        id="achievementDate"
+                        placeholder="e.g. 2026">
+                </div>
+
+                <div class="form-group full">
+                    <label for="achievementDescription">Description</label>
+                    <textarea
+                        id="achievementDescription"
+                        rows="5"
+                        placeholder="Describe this achievement, appointment or leadership responsibility..."></textarea>
+                </div>
+
+            </div>
+
+            <div class="education-actions">
+
+                <button
+                    type="submit"
+                    class="primary-button"
+                    id="achievementSaveButton">
+                    Add Achievement
+                </button>
+
+                <button
+                    type="button"
+                    class="cancel-button"
+                    id="cancelAchievement"
+                    hidden>
+                    Cancel Edit
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- SAVED ACHIEVEMENTS -->
+    <div class="panel">
+
+        <div class="panel-heading">
+
+            <div>
+                <h3>My Achievements & Leadership</h3>
+                <p>All your saved appointments and accomplishments.</p>
+            </div>
+
+            <span class="record-count" id="achievementCount">
+                0 Records
+            </span>
+
+        </div>
+
+        <div
+            id="achievementAdminList"
+            class="achievement-admin-list">
+
+            <p class="empty-state">
+                Loading achievement records...
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+            <!-- CONTACTS -->
+            <section class="admin-section" id="contacts">
+                <div class="section-intro">
+                    <h2>Contact Details</h2>
+                    <p>Manage the information people use to reach you.</p>
+                </div>
+                <div class="panel">
+                    <form id="contactForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input id="phone" value="0542044490">
+                            </div>
+                            <div class="form-group">
+                                <label>WhatsApp Number</label>
+                                <input id="whatsapp" value="233542044490">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input id="email" type="email" placeholder="Your email address">
+                            </div>
+                            <div class="form-group">
+                                <label>Website</label>
+                                <input id="website" type="url" placeholder="https://example.com">
+                            </div>
+                        </div>
+                        <button class="primary-button" type="submit">Save Contact Details</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- SOCIAL -->
+            <section class="admin-section" id="social">
+                <div class="section-intro">
+                    <h2>Social Media</h2>
+                    <p>Add your public social media profiles.</p>
+                </div>
+                <div class="panel">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Facebook URL</label>
+                            <input id="facebook" type="url" placeholder="https://facebook.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram URL</label>
+                            <input id="instagram" type="url" placeholder="https://instagram.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>LinkedIn URL</label>
+                            <input id="linkedin" type="url" placeholder="https://linkedin.com/in/...">
+                        </div>
+                        <div class="form-group">
+                            <label>X / Twitter URL</label>
+                            <input id="twitter" type="url" placeholder="https://x.com/...">
+                        </div>
+                    </div>
+                    <button class="primary-button" data-message="Social media saving will be connected to Supabase next.">Save Social Links</button>
+                </div>
+            </section>
+
+           <!-- APPEARANCE SETTINGS -->
+<section class="admin-section" id="appearance">
+
+    <div class="section-intro">
+        <h2>Appearance Settings</h2>
+        <p>Control which sections visitors can see on your public digital card.</p>
+    </div>
+
+    <div class="panel">
+        <h3>Public Profile Visibility</h3>
+        <p>Turn sections on or off without deleting your saved information.</p>
+
+        <form id="appearanceForm">
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showProfileImage" checked>
+                    Show Profile Photograph
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showBiography" checked>
+                    Show Biography
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showEducation" checked>
+                    Show Education
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showExperience" checked>
+                    Show Professional Experience
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showAchievements" checked>
+                    Show Achievements
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="showSocial" checked>
+                    Show Social Media
+                </label>
+            </div>
+
+            <button type="submit" class="primary-button">
+                Save Appearance Settings
+            </button>
+
+        </form>
+    </div>
+
+    <div class="panel">
+        <h3>Current Theme</h3>
+        <p>Your digital card uses the professional blue-black and gold theme.</p>
+
+        <div class="theme-preview">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+</section>
+        </div>
+
+        <footer class="dashboard-footer">
+            ERIC ANDOH DIGITAL CARD ADMINISTRATION · <span id="adminYear"></span>
+        </footer>
+    </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+(async function protectDashboard() {
+    const client = window.supabase.createClient(
+        "https://mcpqobgxdjihkntphovi.supabase.co",
+        "sb_publishable_9j7w0tU6nAzj2OlLFBjbdQ_hHLYuVOr"
+    );
+
+    try {
+        const { data: { session }, error } =
+            await client.auth.getSession();
+
+        if (error || !session) {
+            window.location.replace("login.html");
+            return;
+        }
+
+        const { data: admin, error: adminError } = await client
+            .from("admin_users")
+            .select("user_id")
+            .eq("user_id", session.user.id)
+            .maybeSingle();
+
+        if (adminError || !admin) {
+            await client.auth.signOut();
+            window.location.replace("login.html");
+            return;
+        }
+
+        const script = document.createElement("script");
+        script.src = "admin.js";
+        document.body.appendChild(script);
+
+    } catch (error) {
+        console.error("Admin verification failed:", error);
+        window.location.replace("login.html");
+    }
+})();
+</script>
+</body>
+</html>
+
