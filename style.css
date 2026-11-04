@@ -1497,3 +1497,41 @@ footer {
         flex-basis: 82px !important;
     }
 }
+/* WHITE OUTLINE FOLLOWING THE LOGO SHAPE */
+.topbar .brand .brand-mark {
+    width: 110px !important;
+    height: 110px !important;
+    min-width: 110px !important;
+    flex: 0 0 110px !important;
+    background: transparent !important;
+    padding: 0 !important;
+    border: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+}
+
+.topbar .brand .brand-mark img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    border-radius: 0 !important;
+
+    filter:
+        drop-shadow(2px 0 0 white)
+        drop-shadow(-2px 0 0 white)
+        drop-shadow(0 2px 0 white)
+        drop-shadow(0 -2px 0 white)
+        drop-shadow(2px 2px 0 white)
+        drop-shadow(-2px -2px 0 white)
+        drop-shadow(2px -2px 0 white)
+        drop-shadow(-2px 2px 0 white);
+}
+
+@media (max-width: 600px) {
+    .topbar .brand .brand-mark {
+        width: 85px !important;
+        height: 85px !important;
+        min-width: 85px !important;
+        flex-basis: 85px !important;
+    }
+}
