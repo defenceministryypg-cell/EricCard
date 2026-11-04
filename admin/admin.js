@@ -63,6 +63,7 @@ const navTitles = {
     overview: "Dashboard Overview",
     profile: "Personal Profile",
     education: "Education & Qualifications",
+    certifications: "Certifications & Professional Training",
     experience: "Professional Experience",
     achievements: "Leadership & Achievements",
     contacts: "Contact Details",
@@ -183,6 +184,7 @@ async function loadProfile() {
         loadContactDetails();
         loadSocialLinks();
         loadAppearanceSettings();
+        loadCertifications();
         loadLogo();
 
         showToast("Profile loaded successfully.");
@@ -2150,6 +2152,419 @@ document.getElementById("resetTheme")?.addEventListener(
 );
 
 
+/* =====================================
+   CERTIFICATIONS MANAGEMENT
+   Stored in profiles.appearance JSONB
+===================================== */
+
+let selectedCertificationFile = null;
+
+function getCertificationRecords() {
+    return Array.isArray(currentProfile?.appearance?.certifications)
+        ? currentProfile.appearance.certifications
+        : [];
+}
+
+// RENDER CERTIFICATIONS
+function renderCertificationAdmin(items = getCertificationRecords()) {
+    const container = document.getElementById("certificationAdminList");
+    const count = document.getElementById("certificationCount");
+
+    if (!container) return;
+
+    if (count) {
+        count.textContent = `${items.length} Record${items.length === 1 ? "" : "s"}`;
+    }
+
+    if (!items.length) {
+        container.innerHTML = `
+            <p class="empty-state">No certifications added yet.</p>
+        `;
+        return;
+    }
+
+    async function viewCertification(index) {
+    const item = getCertificationRecords()[index];
+
+    if (!item?.fileUrl) {
+        showToast("No certificate document found.");
+        return;
+    }
+
+    try {
+        if (!(await hasAdminSession())) {
+            throw new Error("Administrator access required.");
+        }
+
+        const { data, error } = await db.storage
+            .from("certificates")
+            .createSignedUrl(item.fileUrl, 60);
+
+        if (error) throw error;
+
+        window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+
+    } catch (error) {
+        console.error("Certificate viewing error:", error);
+        showToast(error.message || "Unable to open certificate.");
+    }
+}
+
+    container.innerHTML = items.map((item, index) => `
+        <article class="certification-record">
+            <div>
+                <h4>${escapeHTML(item.name)}</h4>
+                <p>${escapeHTML(item.issuer)}</p>
+
+                <small>
+                    Issued: ${escapeHTML(item.issueDate || "Not specified")}
+                    ${item.expiryDate
+                        ? ` · Expires: ${escapeHTML(item.expiryDate)}`
+                        : ""}
+                </small>
+
+                ${item.credentialId
+                    ? `<p>Credential ID: ${escapeHTML(item.credentialId)}</p>`
+                    : ""}
+
+                ${item.description
+                    ? `<p>${escapeHTML(item.description)}</p>`
+                    : ""}
+
+                ${item.fileUrl
+    ? `<p>
+        <button type="button" data-view-certification="${index}">
+            View Certificate
+        </button>
+    </p>`
+    : ""}
+            </div>
+
+            <div class="record-buttons">
+                <button type="button" data-edit-certification="${index}">
+                    Edit
+                </button>
+
+                <button type="button" class="delete-button"
+                    data-delete-certification="${index}">
+                    Delete
+                </button>
+            </div>
+        </article>
+    `).join("");
+}
+
+async function viewCertification(index) {
+    const item = getCertificationRecords()[index];
+
+    if (!item?.fileUrl) {
+        showToast("No certificate document found.");
+        return;
+    }
+
+    try {
+        if (!(await hasAdminSession())) {
+            throw new Error("Administrator access required.");
+        }
+
+        const { data, error } = await db.storage
+            .from("certificates")
+            .createSignedUrl(item.fileUrl, 60);
+
+        if (error) throw error;
+
+        window.open(data.signedUrl, "_blank", "noopener,noreferrer");
+    } catch (error) {
+        console.error("Certificate viewing error:", error);
+        showToast(error.message || "Unable to open certificate.");
+    }
+}
+
+// RESET FORM
+function resetCertificationForm() {
+    document.getElementById("certificationForm")?.reset();
+
+    const id = document.getElementById("certificationId");
+    const title = document.getElementById("certificationFormTitle");
+    const button = document.getElementById("certificationSaveButton");
+    const cancel = document.getElementById("cancelCertification");
+    const preview = document.getElementById("certificationFilePreview");
+
+    if (id) id.value = "";
+    if (title) title.textContent = "Add Certification";
+    if (button) button.textContent = "Add Certification";
+    if (cancel) cancel.hidden = true;
+    if (preview) preview.textContent = "No certificate selected.";
+
+    selectedCertificationFile = null;
+}
+
+// EDIT CERTIFICATION
+function editCertification(index) {
+    const item = getCertificationRecords()[index];
+
+    if (!item) return;
+
+    document.getElementById("certificationId").value = index;
+    document.getElementById("certificationName").value = item.name || "";
+    document.getElementById("certificationIssuer").value = item.issuer || "";
+    document.getElementById("certificationIssueDate").value = item.issueDate || "";
+    document.getElementById("certificationExpiryDate").value = item.expiryDate || "";
+    document.getElementById("certificationCredentialId").value = item.credentialId || "";
+    document.getElementById("certificationVerifyUrl").value = item.verifyUrl || "";
+    document.getElementById("certificationDescription").value = item.description || "";
+    const preview = document.getElementById("certificationFilePreview");
+
+    if (preview) {
+        preview.textContent = item.fileUrl
+            ? "An existing certificate is saved. Choose another file to replace it."
+            : "No certificate currently uploaded.";
+    }
+
+    document.getElementById("certificationFormTitle").textContent = "Edit Certification";
+    document.getElementById("certificationSaveButton").textContent = "Update Certification";
+    document.getElementById("cancelCertification").hidden = false;
+
+    document.getElementById("certificationForm").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+// CERTIFICATE FILE PREVIEW
+document.getElementById("certificationFile")?.addEventListener("change", function () {
+    const file = this.files?.[0];
+
+    if (!file) return;
+
+    const allowedTypes = [
+        "application/pdf",
+        "image/jpeg",
+        "image/png",
+        "image/webp"
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+        showToast("Choose a PDF, JPG, PNG or WebP certificate.");
+        this.value = "";
+        selectedCertificationFile = null;
+        return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+        showToast("Certificate file must not exceed 5MB.");
+        this.value = "";
+        selectedCertificationFile = null;
+        return;
+    }
+
+    selectedCertificationFile = file;
+
+    const preview = document.getElementById("certificationFilePreview");
+
+    if (preview) {
+        preview.textContent = `Selected: ${file.name}`;
+    }
+});
+
+// UPLOAD CERTIFICATE
+async function uploadCertificationFile(file) {
+    if (!file) return null;
+
+    const extension = file.name.split(".").pop().toLowerCase();
+
+    const filePath = `certifications/certificate-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${extension}`;
+
+    const { error } = await db.storage
+        .from("certificates")
+        .upload(filePath, file, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type
+        });
+
+    if (error) throw error;
+
+    // Return the private storage path, NOT a public URL.
+    return filePath;
+}
+// SAVE CERTIFICATION RECORDS
+async function saveCertificationRecords(items) {
+    if (!(await hasAdminSession())) {
+        throw new Error("Please sign in as administrator.");
+    }
+
+    const existingAppearance = currentProfile?.appearance || {};
+
+    const updatedAppearance = {
+        ...existingAppearance,
+        certifications: items
+    };
+
+    const { data, error } = await db
+        .from("profiles")
+        .update({
+            appearance: updatedAppearance,
+            updated_at: new Date().toISOString()
+        })
+        .eq("singleton", true)
+        .select()
+        .single();
+
+    if (error) throw error;
+
+    currentProfile = data;
+
+    renderCertificationAdmin();
+}
+
+// ADD OR UPDATE CERTIFICATION
+document.getElementById("certificationForm")?.addEventListener(
+    "submit",
+    async event => {
+        event.preventDefault();
+
+        const button = document.getElementById("certificationSaveButton");
+
+        const name = document.getElementById("certificationName").value.trim();
+        const issuer = document.getElementById("certificationIssuer").value.trim();
+        const issueDate = document.getElementById("certificationIssueDate").value;
+        const expiryDate = document.getElementById("certificationExpiryDate").value;
+        const credentialId = document.getElementById("certificationCredentialId").value.trim();
+        const verifyUrl = document.getElementById("certificationVerifyUrl").value.trim();
+        const description = document.getElementById("certificationDescription").value.trim();
+        const editIndex = document.getElementById("certificationId").value;
+
+        if (!name || !issuer) {
+            showToast("Certification name and issuing institution are required.");
+            return;
+        }
+
+        if (issueDate && expiryDate && expiryDate < issueDate) {
+            showToast("Expiry date cannot be before the issue date.");
+            return;
+        }
+
+        if (verifyUrl && !/^https?:\/\/.+/i.test(verifyUrl)) {
+            showToast("Enter a valid verification URL beginning with https://");
+            return;
+        }
+
+        const items = [...getCertificationRecords()];
+
+        try {
+            button.disabled = true;
+            button.textContent = "Saving...";
+
+            if (!(await hasAdminSession())) {
+                throw new Error("Please sign in as administrator.");
+            }
+
+            let existingRecord = editIndex !== ""
+                ? items[Number(editIndex)]
+                : null;
+
+            let fileUrl = existingRecord?.fileUrl || "";
+
+            if (selectedCertificationFile) {
+                fileUrl = await uploadCertificationFile(selectedCertificationFile);
+            }
+
+            const record = {
+                name,
+                issuer,
+                issueDate,
+                expiryDate,
+                credentialId,
+                verifyUrl,
+                description,
+                fileUrl
+            };
+
+            if (editIndex !== "") {
+                items[Number(editIndex)] = record;
+            } else {
+                items.push(record);
+            }
+
+            await saveCertificationRecords(items);
+
+            resetCertificationForm();
+
+            showToast(
+                editIndex !== ""
+                    ? "Certification updated successfully!"
+                    : "Certification added successfully!"
+            );
+
+        } catch (error) {
+            console.error("Certification save error:", error);
+            showToast(error.message || "Unable to save certification.");
+
+        } finally {
+            button.disabled = false;
+            button.textContent = "Add Certification";
+        }
+    }
+);
+
+// DELETE CERTIFICATION
+async function deleteCertification(index) {
+    if (!confirm("Are you sure you want to delete this certification record?")) {
+        return;
+    }
+
+    const items = [...getCertificationRecords()];
+
+    if (!items[index]) return;
+
+    items.splice(index, 1);
+
+    try {
+        await saveCertificationRecords(items);
+        resetCertificationForm();
+        showToast("Certification deleted successfully!");
+
+    } catch (error) {
+        console.error("Certification deletion error:", error);
+        showToast(error.message || "Unable to delete certification.");
+    }
+}
+
+// EDIT AND DELETE BUTTON EVENTS
+document.getElementById("certificationAdminList")?.addEventListener(
+    "click",
+    event => {
+        const edit = event.target.closest("[data-edit-certification]");
+        const remove = event.target.closest("[data-delete-certification]");
+        const view = event.target.closest("[data-view-certification]");
+
+        if (edit) {
+            editCertification(Number(edit.dataset.editCertification));
+        }
+
+        if (remove) {
+            deleteCertification(Number(remove.dataset.deleteCertification));
+        }
+
+        if (view) {
+            viewCertification(Number(view.dataset.viewCertification));
+        }
+    }
+);
+// CANCEL EDIT
+document.getElementById("cancelCertification")?.addEventListener(
+    "click",
+    resetCertificationForm
+);
+
+// LOAD SAVED CERTIFICATIONS
+function loadCertifications() {
+    renderCertificationAdmin();
+}
+
+
+
 // =====================================
 // WEBSITE LOGO MANAGEMENT
 // =====================================
@@ -2292,6 +2707,8 @@ logoForm?.addEventListener("submit", async function (event) {
         button.textContent = "Upload Logo";
     }
 });
+
+
 // Load the profile after admin.js has been loaded
 // by the protected dashboard.
 loadProfile();
