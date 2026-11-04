@@ -997,3 +997,238 @@ button { cursor: pointer; }
         width: 100%;
     }
 }
+
+/* =========================================
+   ADMIN SKILLS & EXPERTISE
+========================================= */
+
+#skills .panel {
+    background: #111d2e;
+    border: 1px solid rgba(214, 185, 120, 0.18);
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 24px;
+}
+
+#skills h3 {
+    color: #f8fafc;
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+#skills p {
+    color: #aab5c4;
+    font-size: 13px;
+}
+
+/* Skills form */
+
+#skillForm {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#skillForm label {
+    display: block;
+    color: #d6b978;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+#skillForm input,
+#skillForm select,
+#skillForm textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: #0d1828;
+    color: #f8fafc;
+    border: 1px solid #29394e;
+    border-radius: 8px;
+    padding: 13px 14px;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#skillForm select {
+    cursor: pointer;
+    color-scheme: dark;
+}
+
+#skillForm select option {
+    background: #111d2e;
+    color: #f8fafc;
+}
+
+#skillForm textarea {
+    min-height: 105px;
+    resize: vertical;
+}
+
+#skillForm input:focus,
+#skillForm select:focus,
+#skillForm textarea:focus {
+    border-color: #d6b978;
+    box-shadow: 0 0 0 3px rgba(214, 185, 120, 0.10);
+}
+
+/* Form buttons */
+
+#skillSaveButton,
+#cancelSkill {
+    border-radius: 7px;
+    padding: 11px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#skillSaveButton {
+    background: #d6b978;
+    color: #101827;
+    border: 1px solid #d6b978;
+}
+
+#skillSaveButton:hover {
+    background: #ead39d;
+}
+
+#cancelSkill {
+    background: transparent;
+    color: #cbd5e1;
+    border: 1px solid #46546a;
+}
+
+#cancelSkill:hover {
+    border-color: #d6b978;
+    color: #d6b978;
+}
+
+/* Skills list */
+
+#skillAdminList {
+    display: grid;
+    gap: 14px;
+    margin-top: 20px;
+}
+
+#skillAdminList .skill-admin-record {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+    background: #111d2e;
+    border: 1px solid #29394e;
+    border-radius: 12px;
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+#skillAdminList .skill-admin-record:hover {
+    border-color: #d6b978;
+    transform: translateY(-2px);
+}
+
+#skillAdminList .skill-admin-info h4 {
+    color: #f8fafc;
+    font-size: 15px;
+    margin: 0 0 7px;
+}
+
+#skillAdminList .skill-admin-info span {
+    display: inline-block;
+    color: #d6b978;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+#skillAdminList .skill-admin-info p {
+    color: #cbd5e1;
+    margin: 4px 0;
+}
+
+#skillAdminList .skill-admin-info small {
+    display: block;
+    color: #94a3b8;
+    margin-top: 8px;
+    line-height: 1.6;
+}
+
+/* Edit and delete buttons */
+
+#skillAdminList .record-buttons {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+#skillAdminList .record-buttons button {
+    padding: 9px 15px;
+    border-radius: 7px;
+    background: transparent;
+    color: #d6b978;
+    border: 1px solid #46546a;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+#skillAdminList .record-buttons button:hover {
+    background: #d6b978;
+    color: #101827;
+    border-color: #d6b978;
+}
+
+#skillAdminList .record-buttons .delete-button {
+    color: #f28b8b;
+    border-color: rgba(242, 139, 139, 0.35);
+}
+
+#skillAdminList .record-buttons .delete-button:hover {
+    background: #a83232;
+    color: #fff;
+    border-color: #a83232;
+}
+
+/* Empty state */
+
+#skillAdminList .empty-state {
+    padding: 25px;
+    text-align: center;
+    background: #111d2e;
+    border: 1px dashed #46546a;
+    border-radius: 10px;
+    color: #94a3b8;
+}
+
+/* Mobile responsiveness */
+
+@media (max-width: 600px) {
+    #skills .panel {
+        padding: 17px;
+    }
+
+    #skillAdminList .skill-admin-record {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    #skillAdminList .record-buttons {
+        width: 100%;
+    }
+
+    #skillAdminList .record-buttons button {
+        flex: 1;
+    }
+
+    #skillForm input,
+    #skillForm select,
+    #skillForm textarea {
+        font-size: 14px;
+    }
+}
