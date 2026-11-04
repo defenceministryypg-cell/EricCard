@@ -1404,21 +1404,16 @@ footer {
         font-size: 11px;
         padding: 10px 6px;
     }
-}/* =====================================
-   HEADER BRAND LOGO
-   PRESERVE ORIGINAL LOGO SHAPE
-===================================== */
-
-.brand {
+}.brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
 }
 
 .brand-mark {
-    width: 48px;
-    height: 48px;
-    min-width: 48px;
+    width: 75px;
+    height: 75px;
+    min-width: 75px;
     border-radius: 0 !important;
     overflow: visible;
     display: flex;
@@ -1439,34 +1434,30 @@ footer {
 }
 
 #mainLogoFallback {
-    border-radius: 0 !important;
-    color: var(--gold);
-    font-family: "Playfair Display", serif;
-    font-size: 23px;
+    font-size: 30px;
     font-weight: 700;
+    color: var(--gold);
 }
 
 .brand > span:last-child {
-    color: var(--white);
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 700;
     letter-spacing: 2px;
 }
 
-/* Mobile header */
 @media (max-width: 600px) {
     .brand-mark {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
+        width: 58px;
+        height: 58px;
+        min-width: 58px;
     }
 
     .brand {
-        gap: 9px;
+        gap: 10px;
     }
 
     .brand > span:last-child {
         font-size: 12px;
-        letter-spacing: 1.3px;
+        letter-spacing: 1px;
     }
 }
