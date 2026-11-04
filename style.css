@@ -1801,7 +1801,6 @@ footer > small {
     }
 }
 
-
 /* =====================================
    COMPACT QR CODE SECTION
 ===================================== */
@@ -1871,3 +1870,73 @@ footer > small {
     }
 }
 
+/* =====================================
+   PUBLIC SKILLS SECTION
+===================================== */
+
+.skills-grid {
+    display: grid;
+    gap: 25px;
+}
+
+.skill-category h3 {
+    color: var(--gold);
+    font-size: 15px;
+    margin-bottom: 14px;
+}
+
+.skill-items {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.skill-card {
+    padding: 19px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.skill-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--gold);
+}
+
+.skill-card-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.skill-card h4 {
+    color: var(--white);
+    font-size: 14px;
+    margin: 0;
+}
+
+.skill-level {
+    color: var(--gold);
+    font-size: 10px;
+    white-space: nowrap;
+    font-weight: 600;
+}
+
+.skill-card p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 10px 0 0;
+}
+
+@media (max-width: 600px) {
+    .skill-items {
+        grid-template-columns: 1fr;
+    }
+
+    .skill-card {
+        padding: 15px;
+    }
+}
