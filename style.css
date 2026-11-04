@@ -1210,3 +1210,200 @@ footer {
     }
 }
 
+/* =========================================
+   MOBILE HERO RESPONSIVENESS
+   EXISTING HTML — NO CHANGES
+========================================= */
+
+@media screen and (max-width: 650px) {
+
+    .hero {
+        width: 100%;
+        min-height: auto;
+        padding: 42px 20px 35px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        width: 100%;
+        max-width: 430px;
+        margin: 0 auto;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    /* PROFILE PHOTO */
+
+    .profile-frame {
+        position: relative;
+        top: auto;
+        right: auto;
+        transform: none;
+
+        width: 155px;
+        height: 190px;
+        flex-shrink: 0;
+
+        margin: 0 auto 27px;
+        padding: 6px;
+
+        border-radius: 100px 100px 12px 12px;
+    }
+
+    .profile-frame::after {
+        inset: -8px -8px 8px 8px;
+        border-radius: 105px 105px 14px 14px;
+    }
+
+    .profile-frame img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top;
+        border-radius: 95px 95px 8px 8px;
+    }
+
+    /* STATUS */
+
+    .availability {
+        max-width: 100%;
+        padding: 8px 13px;
+        margin-bottom: 20px;
+        font-size: 9px;
+        letter-spacing: 1.3px;
+        white-space: normal;
+    }
+
+    /* INTRODUCTION */
+
+    .eyebrow {
+        font-size: 9px;
+        letter-spacing: 2px;
+        line-height: 1.7;
+        margin-bottom: 12px;
+    }
+
+    /* NAME */
+
+    .hero-content h1 {
+        width: 100%;
+        max-width: 100%;
+        font-size: clamp(30px, 8.5vw, 42px);
+        line-height: 1.18;
+        letter-spacing: -.5px;
+        margin: 0 0 13px;
+        overflow-wrap: anywhere;
+    }
+
+    /* HEADLINE */
+
+    .hero-title {
+        width: 100%;
+        max-width: 350px;
+        font-size: 13px;
+        line-height: 1.8;
+        margin: 0 auto 13px;
+    }
+
+    /* OFFICIAL POSITIONS */
+
+    .position {
+        width: 100%;
+        max-width: 360px;
+        font-size: 12.5px;
+        line-height: 1.85;
+        margin: 0 auto 13px;
+        overflow-wrap: break-word;
+    }
+
+    /* LOCATION */
+
+    .location {
+        font-size: 12px;
+        margin: 0 auto 24px;
+    }
+
+    /* CONTACT BUTTONS */
+
+    .hero-buttons {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 10px;
+        margin: 0 auto;
+    }
+
+    .hero-buttons .btn {
+        flex: 1;
+        min-width: 0;
+        max-width: 170px;
+        min-height: 46px;
+        padding: 11px 9px;
+        font-size: 12px;
+        border-radius: 7px;
+        white-space: nowrap;
+    }
+
+    /* SAVE CONTACT */
+
+    .save-contact {
+        margin-top: 17px;
+        padding: 11px 17px;
+        font-size: 11px;
+    }
+
+    /* BOTTOM TEXT */
+
+    .hero-bottom {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        margin: 32px auto 0;
+        text-align: center;
+        font-size: 8px;
+        letter-spacing: 1.5px;
+        line-height: 1.8;
+    }
+}
+
+/* EXTRA SMALL PHONES */
+
+@media screen and (max-width: 360px) {
+
+    .hero {
+        padding: 35px 15px 30px;
+    }
+
+    .profile-frame {
+        width: 135px;
+        height: 170px;
+    }
+
+    .hero-content h1 {
+        font-size: 30px;
+    }
+
+    .hero-title {
+        font-size: 12px;
+    }
+
+    .position {
+        font-size: 12px;
+    }
+
+    .hero-buttons .btn {
+        font-size: 11px;
+        padding: 10px 6px;
+    }
+}
+
