@@ -43,6 +43,9 @@
     <button class="nav-link" data-section="certifications">
     🏅 <span>Certifications</span>
 </button>
+<button class="nav-link" data-section="skills">
+    💡 <span>Skills & Expertise</span>
+</button>
 
     <button class="nav-link" data-section="appearance">◈ <span>Appearance</span></button>
 </nav>
@@ -369,6 +372,85 @@
 
 </section>
 
+<!-- SKILLS MANAGEMENT -->
+<section class="admin-section" id="skills">
+
+    <div class="section-header">
+        <div>
+            <h2>Skills & Expertise</h2>
+            <p>Manage the skills displayed on your public profile.</p>
+        </div>
+    </div>
+
+    <div class="admin-card">
+        <form id="skillForm">
+
+            <input type="hidden" id="skillIndex">
+
+            <div class="form-group">
+                <label for="skillName">Skill Name</label>
+                <input
+                    type="text"
+                    id="skillName"
+                    placeholder="e.g. Web Development"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="skillCategory">Skill Category</label>
+                <select id="skillCategory" required>
+                    <option value="">Select category</option>
+                    <option value="Technical Skills">Technical Skills</option>
+                    <option value="Professional Skills">Professional Skills</option>
+                    <option value="Leadership Skills">Leadership Skills</option>
+                    <option value="Creative Skills">Creative Skills</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="skillLevel">Proficiency Level</label>
+                <select id="skillLevel" required>
+                    <option value="">Select proficiency</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="Expert">Expert</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="skillDescription">Description (Optional)</label>
+                <textarea
+                    id="skillDescription"
+                    placeholder="Briefly describe this skill..."
+                    rows="3"
+                ></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" id="skillSaveButton">
+                    Save Skill
+                </button>
+
+                <button type="button" id="cancelSkill">
+                    Cancel
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <div class="admin-card">
+        <h3>My Skills</h3>
+        <p>Total Skills: <strong id="skillCount">0</strong></p>
+
+        <div id="skillAdminList">
+            <!-- Skills will appear here -->
+        </div>
+    </div>
+
+</section>
 
          
 <!-- EXPERIENCE MANAGEMENT -->
