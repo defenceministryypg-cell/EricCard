@@ -951,183 +951,178 @@ footer {
 
 
 /* =====================================
-   IMPROVED BASIC PROFILE INFORMATION
+   EXECUTIVE HERO - REFINED DESIGN
+   PRESERVING ORIGINAL LAYOUT
 ===================================== */
 
-/* HERO CONTENT */
+.hero {
+    position: relative;
+    min-height: 620px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background:
+        radial-gradient(
+            circle at 50% 5%,
+            rgba(214, 185, 120, 0.07),
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            #172438 0%,
+            #101827 55%,
+            #0c1422 100%
+        );
+}
+
 .hero-content {
     position: relative;
     z-index: 2;
-    width: 100%;
-    max-width: 850px;
+    width: min(100% - 40px, 850px);
     margin: 0 auto;
-    padding: 65px 24px 55px;
+    padding: 55px 0 75px;
     text-align: center;
 }
 
-/* PROFILE PHOTO */
-.profile-frame {
-    width: 155px;
-    height: 155px;
-    margin: 0 auto 28px;
-    border: 3px solid var(--gold);
-    border-radius: 50%;
-    padding: 5px;
-    background: var(--surface);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, .3);
-    overflow: hidden;
-}
+/* STATUS LABEL */
 
-.profile-frame img {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 50%;
-}
-
-/* PROFILE STATUS */
 .availability {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: 9px;
-    padding: 9px 16px;
-    margin-bottom: 23px;
-    border: 1px solid var(--border);
-    border-radius: 30px;
-    color: var(--gold);
+    padding: 10px 19px;
+    margin-bottom: 27px;
+    border: 1px solid rgba(214, 185, 120, .22);
+    border-radius: 40px;
     background: rgba(255, 255, 255, .035);
+    color: #e0c68e;
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.8px;
-}
-
-.status-dot {
-    width: 7px;
-    height: 7px;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: #68c995;
+    font-weight: 600;
+    letter-spacing: 2px;
 }
 
 /* INTRODUCTION */
+
 .eyebrow {
-    color: var(--gold);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    margin-bottom: 13px;
+    color: #d6b978;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
 }
 
-/* FULL NAME */
+/* NAME */
+
 .hero-content h1 {
-    color: var(--white);
+    color: #fff;
     font-family: "Playfair Display", serif;
-    font-size: clamp(34px, 6vw, 58px);
+    font-size: clamp(38px, 6.5vw, 64px);
     font-weight: 700;
     line-height: 1.15;
-    letter-spacing: .5px;
-    margin: 0 auto 16px;
-    overflow-wrap: anywhere;
+    letter-spacing: -1px;
+    margin: 0 auto 17px;
 }
 
-/* PROFESSIONAL HEADLINE */
+/* HEADLINE */
+
 .hero-title {
-    max-width: 650px;
-    margin: 0 auto 12px;
-    color: var(--gold);
+    color: #dfc17f;
     font-size: 15px;
     font-weight: 600;
     line-height: 1.8;
     letter-spacing: .4px;
+    margin: 0 auto 13px;
 }
 
-/* PROFESSIONAL POSITION */
+/* OFFICIAL POSITIONS */
+
 .position {
-    max-width: 650px;
-    margin: 0 auto 15px;
-    color: var(--white);
+    width: min(100%, 650px);
+    margin: 0 auto 19px;
+    color: rgba(255, 255, 255, .83);
     font-size: 14px;
-    line-height: 1.8;
-    opacity: .85;
+    line-height: 1.9;
+    font-weight: 400;
 }
 
 /* LOCATION */
+
 .location {
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 28px;
+    color: #b8c0ce;
+    font-size: 12px;
+    margin: 0 auto 32px;
 }
 
 /* CONTACT BUTTONS */
+
 .hero-buttons {
     display: flex;
-    align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 13px;
-    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 
 .hero-buttons .btn {
     min-width: 145px;
+    min-height: 49px;
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    padding: 13px 23px;
-    border-radius: 8px;
+    border-radius: 9px;
     font-size: 13px;
     font-weight: 700;
-    transition: transform .25s ease, background .25s ease;
+    transition: all .25s ease;
+}
+
+.hero-buttons .btn-gold {
+    background: #d6b978;
+    color: #101827;
+    border: 1px solid #d6b978;
+}
+
+.hero-buttons .btn-outline {
+    background: transparent;
+    color: #e3c785;
+    border: 1px solid #d6b978;
 }
 
 .hero-buttons .btn:hover {
     transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .2);
 }
 
 /* SAVE CONTACT */
+
 .save-contact {
-    color: var(--gold);
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 21px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: .25s ease;
+    margin-top: 19px;
 }
 
-.save-contact:hover {
-    background: rgba(214, 185, 120, .1);
-    border-color: var(--gold);
-}
+/* MOBILE */
 
-/* MOBILE RESPONSIVENESS */
 @media (max-width: 600px) {
-    .hero-content {
-        padding: 48px 20px 45px;
+    .hero {
+        min-height: 570px;
     }
 
-    .profile-frame {
-        width: 125px;
-        height: 125px;
-        margin-bottom: 23px;
+    .hero-content {
+        padding: 48px 0 65px;
     }
 
     .availability {
         font-size: 9px;
-        letter-spacing: 1.2px;
-        padding: 8px 12px;
+        letter-spacing: 1.5px;
     }
 
     .eyebrow {
         font-size: 9px;
-        letter-spacing: 2px;
+        letter-spacing: 2.5px;
     }
 
     .hero-content h1 {
-        font-size: clamp(30px, 9vw, 42px);
+        font-size: clamp(34px, 9vw, 44px);
+        letter-spacing: -.5px;
     }
 
     .hero-title {
@@ -1136,6 +1131,7 @@ footer {
 
     .position {
         font-size: 13px;
+        line-height: 1.8;
     }
 
     .hero-buttons {
@@ -1143,7 +1139,7 @@ footer {
     }
 
     .hero-buttons .btn {
-        min-width: 125px;
-        padding: 12px 17px;
+        min-width: 130px;
     }
 }
+
