@@ -1,4 +1,5 @@
 
+
 :root {
     /* Dynamic theme colours from Supabase */
     --background: var(--theme-background, #0b1220);
@@ -379,17 +380,76 @@ h1 {
 }
 
 #qrcode img, #qrcode canvas { display: block; }
+/* =================================
+   FOOTER REDESIGN
+================================= */
 
 footer {
-    padding: 45px 20px;
+    min-height: 260px;
+    width: 100%;
+    padding: 35px 20px 25px;
+    background: #101827;
+    border-top: 1px solid rgba(214, 185, 120, 0.2);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
     text-align: center;
-    background: #080e18;
+    box-sizing: border-box;
 }
 
-.footer-mark { margin: 0 auto 15px; }
-footer p { letter-spacing: 3px; font-size: 12px; }
-footer span, footer small { display: block; color: var(--muted); font-size: 11px; margin-top: 8px; }
+.footer-mark {
+    width: 130px !important;
+    height: 100px !important;
+    margin: 0 auto 8px;
+    padding: 12px;
+    background: #ffffff;
+    border-radius: 12px;
 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.footer-mark img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+}
+
+footer > p {
+    margin: 0;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+footer > span {
+    color: #c4cad3;
+    font-size: 13px;
+}
+
+footer > small {
+    color: #a5afbd;
+    font-size: 12px;
+}
+
+@media (max-width: 600px) {
+    footer {
+        min-height: 230px;
+        padding: 30px 15px 25px;
+    }
+
+    .footer-mark {
+        width: 105px !important;
+        height: 85px !important;
+    }
+}
 @media (max-width: 768px) {
     .topbar { padding: 0 5%; }
     .hero { min-height: 670px; padding-top: 65px; }
@@ -867,6 +927,7 @@ footer {
     }
 }
 
+
 /* =====================================
    IMPROVED ORIGINAL ABOUT SECTION
 ===================================== */
@@ -1209,6 +1270,7 @@ footer {
     }
 }
 
+
 /* =========================================
    MOBILE HERO RESPONSIVENESS
    EXISTING HTML — NO CHANGES
@@ -1404,7 +1466,13 @@ footer {
         font-size: 11px;
         padding: 10px 6px;
     }
-}.brand {
+}
+/* =====================================
+   HEADER BRAND LOGO
+   PRESERVE ORIGINAL LOGO SHAPE
+===================================== */
+
+.brand {
     display: flex;
     align-items: center;
     gap: 14px;
@@ -1533,5 +1601,202 @@ footer {
         height: 85px !important;
         min-width: 85px !important;
         flex-basis: 85px !important;
+    }
+}
+
+
+/* =========================================
+   PROFESSIONAL FOOTER REDESIGN
+   ========================================= */
+
+footer {
+    width: 100%;
+    min-height: 300px;
+    padding: 45px 20px 25px;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(214, 185, 120, 0.09),
+            transparent 55%
+        ),
+        #101827;
+
+    border-top: 1px solid rgba(214, 185, 120, 0.22);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 13px;
+    box-sizing: border-box;
+}
+
+/* FOOTER LOGO — SAME EFFECT AS HEADER */
+
+footer .footer-mark {
+    width: 110px !important;
+    height: 110px !important;
+    min-width: 110px !important;
+    flex: 0 0 110px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 0 !important;
+    margin: 0 auto 8px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+}
+
+footer .footer-mark img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    border-radius: 0 !important;
+
+    filter:
+        drop-shadow(2px 0 0 white)
+        drop-shadow(-2px 0 0 white)
+        drop-shadow(0 2px 0 white)
+        drop-shadow(0 -2px 0 white)
+        drop-shadow(2px 2px 0 white)
+        drop-shadow(-2px -2px 0 white)
+        drop-shadow(2px -2px 0 white)
+        drop-shadow(-2px 2px 0 white);
+}
+
+/* FALLBACK LOGO */
+
+#footerLogoFallback {
+    color: var(--gold);
+    font-family: "Playfair Display", serif;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+/* FOOTER NAME */
+
+footer > p {
+    margin: 0;
+    color: #ffffff;
+    font-family: "DM Sans", sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+}
+
+/* COPYRIGHT */
+
+footer > span {
+    color: #c2cbd6;
+    font-size: 13px;
+    letter-spacing: 0.4px;
+}
+
+/* FOOTER DESCRIPTION */
+
+footer > small {
+    color: #9ba8b8;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+
+/* SUBTLE GOLD DIVIDER */
+
+footer > p::after {
+    content: "";
+    display: block;
+    width: 45px;
+    height: 2px;
+    background: var(--gold);
+    margin: 12px auto 0;
+    border-radius: 2px;
+}
+
+/* MOBILE FOOTER */
+
+@media (max-width: 600px) {
+    footer {
+        min-height: 260px;
+        padding: 35px 18px 25px;
+        gap: 11px;
+    }
+
+    footer .footer-mark {
+        width: 85px !important;
+        height: 85px !important;
+        min-width: 85px !important;
+        flex-basis: 85px !important;
+    }
+
+    footer > p {
+        font-size: 15px;
+        letter-spacing: 2px;
+    }
+
+    footer > span {
+        font-size: 12px;
+    }
+
+    footer > small {
+        font-size: 11px;
+    }
+}
+
+/* KEEP HIDDEN LOGO IMAGE HIDDEN */
+
+footer .footer-mark img[hidden] {
+    display: none !important;
+}
+/* COMPACT FOOTER WITH LARGE LOGO */
+footer {
+    min-height: unset !important;
+    height: auto !important;
+    padding: 14px 10px 12px !important;
+    gap: 5px !important;
+}
+
+/* Keep footer logo large */
+footer .footer-mark {
+    width: 100px !important;
+    height: 100px !important;
+    min-width: 100px !important;
+    flex: 0 0 100px !important;
+    margin: 0 auto 3px !important;
+}
+
+/* Footer text */
+footer > p {
+    font-size: 11px !important;
+    margin: 0 !important;
+}
+
+footer > p::after {
+    margin-top: 4px !important;
+    width: 25px !important;
+}
+
+footer > span,
+footer > small {
+    font-size: 9px !important;
+    margin: 0 !important;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    footer .footer-mark {
+        width: 90px !important;
+        height: 90px !important;
+        min-width: 90px !important;
+        flex-basis: 90px !important;
     }
 }
