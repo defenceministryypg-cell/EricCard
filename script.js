@@ -492,6 +492,46 @@ function applyAppearanceSettings(savedSettings = {}) {
 
     console.log("Appearance settings applied.");
 }
+/* =====================================
+   PUBLIC CERTIFICATIONS DISPLAY
+===================================== */
+
+function renderPublicCertifications(certifications = []) {
+    const section = getElement("certificationsSection");
+    const container = getElement("certificationsList");
+
+    if (!section || !container) return;
+
+    if (!Array.isArray(certifications) || certifications.length === 0) {
+        section.style.display = "none";
+        return;
+    }
+
+    section.style.display = "";
+
+    container.innerHTML = certifications.map(item => `
+        <article class="certification-card">
+            <h3>${escapeHTML(item.name || "")}</h3>
+            <p>${escapeHTML(item.issuer || "")}</p>
+
+            ${item.issueDate ? `
+                <small>Issued: ${escapeHTML(item.issueDate)}</small>
+            ` : ""}
+
+            ${item.expiryDate ? `
+                <small>Expires: ${escapeHTML(item.expiryDate)}</small>
+            ` : ""}
+
+            ${item.description ? `
+                <p>${escapeHTML(item.description)}</p>
+            ` : ""}
+
+            ${item.credentialId ? `
+                <small>Credential ID: ${escapeHTML(item.credentialId)}</small>
+            ` : ""}
+        </article>
+    `).join("");
+}
 
 /* =====================================
    PROFILE DISPLAY
@@ -546,6 +586,9 @@ function displayProfile(profile) {
     renderExperience(profile.experience || []);
 
     renderAchievements(profile.achievements || []);
+    renderPublicCertifications(
+    profile.appearance?.certifications || []
+);
 
     renderSocialLinks(profile.social_links || {});
     applyAppearanceSettings(profile.appearance);
