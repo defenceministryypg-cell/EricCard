@@ -1800,3 +1800,74 @@ footer > small {
         flex-basis: 90px !important;
     }
 }
+
+
+/* =====================================
+   COMPACT QR CODE SECTION
+===================================== */
+
+.qr-card {
+    width: 100% !important;
+    max-width: 230px !important;
+    margin: 15px auto !important;
+    padding: 13px 12px !important;
+    border-radius: 12px !important;
+    gap: 6px !important;
+}
+
+.qr-heading h3 {
+    font-size: 12px !important;
+    margin: 0 0 5px !important;
+    letter-spacing: 0.7px;
+}
+
+.qr-heading p {
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+}
+
+.qr-code-wrapper {
+    padding: 6px !important;
+    margin: 9px auto !important;
+    border-radius: 7px !important;
+}
+
+#qrcode img,
+#qrcode canvas {
+    width: 115px !important;
+    height: 115px !important;
+}
+
+.qr-logo {
+    width: 27px !important;
+    height: 27px !important;
+    font-size: 10px !important;
+}
+
+.qr-caption {
+    font-size: 10px !important;
+    margin: 5px 0 !important;
+    letter-spacing: 1px;
+}
+
+.qr-actions button {
+    padding: 7px 12px !important;
+    font-size: 10px !important;
+    border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+    .qr-card {
+        max-width: 210px !important;
+        padding: 11px 10px !important;
+        margin: 12px auto !important;
+    }
+
+    #qrcode img,
+    #qrcode canvas {
+        width: 105px !important;
+        height: 105px !important;
+    }
+}
+
