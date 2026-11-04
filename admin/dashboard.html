@@ -40,6 +40,9 @@
     <button class="nav-link" data-section="logo">
         ◉ <span>Website Logo</span>
     </button>
+    <button class="nav-link" data-section="certifications">
+    🏅 <span>Certifications</span>
+</button>
 
     <button class="nav-link" data-section="appearance">◈ <span>Appearance</span></button>
 </nav>
@@ -251,6 +254,116 @@
 
         <div id="educationAdminList" class="education-admin-list">
             <p class="empty-state">Loading qualifications...</p>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- CERTIFICATIONS MANAGEMENT -->
+<section class="admin-section" id="certifications">
+
+    <div class="section-intro">
+        <h2>Certifications & Professional Training</h2>
+        <p>Manage your professional qualifications, certificates and completed training programmes.</p>
+    </div>
+
+    <!-- ADD / EDIT CERTIFICATION -->
+    <div class="panel">
+        <h3 id="certificationFormTitle">Add Certification</h3>
+
+        <form id="certificationForm">
+            <input type="hidden" id="certificationId">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="certificationName">Certification Name *</label>
+                    <input type="text" id="certificationName"
+                        placeholder="e.g. Diploma in Cybersecurity" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="certificationIssuer">Issuing Institution *</label>
+                    <input type="text" id="certificationIssuer"
+                        placeholder="e.g. Ghana Communication Technology University" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="certificationIssueDate">Date Issued</label>
+                    <input type="date" id="certificationIssueDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="certificationExpiryDate">Expiry Date</label>
+                    <input type="date" id="certificationExpiryDate">
+                </div>
+
+                <div class="form-group">
+                    <label for="certificationCredentialId">Credential ID</label>
+                    <input type="text" id="certificationCredentialId"
+                        placeholder="Optional credential ID">
+                </div>
+
+                <div class="form-group">
+                    <label for="certificationVerifyUrl">Verification URL</label>
+                    <input type="url" id="certificationVerifyUrl"
+                        placeholder="Official verification webpage (optional)">
+                </div>
+
+                <div class="form-group full">
+                    <label for="certificationDescription">Description</label>
+                    <textarea id="certificationDescription" rows="4"
+                        placeholder="Describe the qualification, skills or training completed..."></textarea>
+                </div>
+
+                <div class="form-group full">
+                    <label for="certificationFile">Private Certificate Document</label>
+                    <input type="file" id="certificationFile"
+                        accept=".pdf,image/png,image/jpeg,image/webp">
+
+                    <small>
+                        Private document storage. Only authorized administrators
+                        can access uploaded certificates. Maximum file size: 5MB.
+                    </small>
+                </div>
+
+                <div class="form-group full">
+                    <label>Document Status</label>
+                    <div id="certificationFilePreview" class="certificate-file-preview">
+                        No certificate selected.
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="education-actions">
+                <button type="submit" class="primary-button"
+                    id="certificationSaveButton">
+                    Add Certification
+                </button>
+
+                <button type="button" class="cancel-button"
+                    id="cancelCertification" hidden>
+                    Cancel Edit
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- SAVED CERTIFICATIONS -->
+    <div class="panel">
+        <div class="panel-heading">
+            <div>
+                <h3>My Certifications</h3>
+                <p>Manage your saved professional credentials and private documents.</p>
+            </div>
+
+            <span class="record-count" id="certificationCount">0 Records</span>
+        </div>
+
+        <div id="certificationAdminList">
+            <p class="empty-state">No certifications added yet.</p>
         </div>
     </div>
 
