@@ -1461,3 +1461,39 @@ footer {
         letter-spacing: 1px;
     }
 }
+/* LARGE HEADER LOGO */
+.topbar .brand {
+    display: flex !important;
+    align-items: center !important;
+    gap: 16px !important;
+}
+
+.topbar .brand .brand-mark {
+    width: 110px !important;
+    height: 110px !important;
+    min-width: 110px !important;
+    flex: 0 0 110px !important;
+    overflow: visible !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+.topbar .brand .brand-mark img {
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    border-radius: 0 !important;
+}
+
+@media (max-width: 600px) {
+    .topbar .brand .brand-mark {
+        width: 82px !important;
+        height: 82px !important;
+        min-width: 82px !important;
+        flex-basis: 82px !important;
+    }
+}
