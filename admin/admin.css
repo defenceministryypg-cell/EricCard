@@ -1232,3 +1232,216 @@ button { cursor: pointer; }
         font-size: 14px;
     }
 }
+/* =========================================
+   CERTIFICATIONS – PROFESSIONAL DESIGN
+========================================= */
+
+#certifications .section-intro {
+    margin-bottom: 25px;
+}
+
+#certifications .section-intro h2 {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-color, #ffffff);
+}
+
+#certifications .section-intro p {
+    color: #aab7ca;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+#certifications .panel {
+    background: #172438;
+    border: 1px solid rgba(214, 185, 120, 0.12);
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 24px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Panel heading */
+
+#certifications .panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+#certifications .panel-heading h3 {
+    font-size: 19px;
+    color: #ffffff;
+    margin: 0 0 7px;
+}
+
+#certifications .panel-heading p {
+    color: #aab7ca;
+    font-size: 13px;
+    margin: 0;
+}
+
+#certifications .record-count {
+    background: rgba(214, 185, 120, 0.12);
+    color: #d6b978;
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Form layout */
+
+#certifications .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+#certifications .form-group {
+    margin-bottom: 17px;
+    min-width: 0;
+}
+
+#certifications .form-group.full {
+    grid-column: 1 / -1;
+}
+
+#certifications .form-group label {
+    display: block;
+    color: #e8edf5;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 9px;
+}
+
+#certifications .form-group input,
+#certifications .form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    background: #101c2e;
+    color: #ffffff;
+    border: 1px solid #34445c;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+#certifications .form-group input:focus,
+#certifications .form-group textarea:focus {
+    border-color: #d6b978;
+    box-shadow: 0 0 0 3px rgba(214, 185, 120, 0.1);
+}
+
+#certifications .form-group small {
+    display: block;
+    color: #9baac0;
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 8px;
+}
+
+/* Saved certification records */
+
+#certificationAdminList {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+#certificationAdminList > div {
+    background: #1c2c43;
+    border: 1px solid rgba(214, 185, 120, 0.15);
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 0;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+#certificationAdminList > div:hover {
+    transform: translateY(-3px);
+    border-color: rgba(214, 185, 120, 0.6);
+}
+
+#certificationAdminList h3,
+#certificationAdminList strong {
+    color: #ffffff;
+}
+
+#certificationAdminList p {
+    color: #bdc9d9;
+    font-size: 13px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}
+
+#certificationAdminList small {
+    color: #d6b978;
+    font-size: 12px;
+}
+
+/* Action buttons */
+
+#certificationAdminList button {
+    padding: 9px 16px;
+    border-radius: 7px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 8px 7px 0 0;
+    transition: 0.2s ease;
+}
+
+#certificationAdminList button:hover {
+    transform: translateY(-1px);
+}
+
+/* Empty state */
+
+#certificationAdminList .empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 35px 15px;
+    color: #aab7ca;
+}
+
+/* Mobile */
+
+@media (max-width: 700px) {
+    #certifications .panel {
+        padding: 17px;
+    }
+
+    #certifications .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #certifications .form-group.full {
+        grid-column: auto;
+    }
+
+    #certificationAdminList {
+        grid-template-columns: 1fr;
+    }
+
+    #certifications .panel-heading {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 420px) {
+    #certifications .panel-heading h3 {
+        font-size: 16px;
+    }
+
+    #certifications .record-count {
+        font-size: 11px;
+        padding: 6px 9px;
+    }
+}
