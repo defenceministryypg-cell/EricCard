@@ -64,6 +64,7 @@ const navTitles = {
     profile: "Personal Profile",
     education: "Education & Qualifications",
     certifications: "Certifications & Professional Training",
+    skills: "Skills & Expertise",
     experience: "Professional Experience",
     achievements: "Leadership & Achievements",
     contacts: "Contact Details",
@@ -179,6 +180,7 @@ async function loadProfile() {
 
         // Load Education and Experience records
         renderEducationAdmin(data.education);
+        renderSkillsAdmin(data.appearance?.skills || []);
         renderExperienceAdmin(data.experience);
         renderAchievementAdmin(data.achievements);
         loadContactDetails();
@@ -1276,6 +1278,226 @@ document.getElementById("cancelExperience")?.addEventListener(
     "click",
     resetExperienceForm
 );
+
+
+// ---------------------------------------------------------
+// SKILLS & EXPERTISE MANAGEMENT
+// Stored in profiles.appearance.skills (JSONB)
+// ---------------------------------------------------------
+
+function getSkillRecords() {
+    return getArray(currentProfile?.appearance?.skills);
+}
+
+function renderSkillsAdmin(items = []) {
+    const container = document.getElementById("skillAdminList");
+    const count = document.getElementById("skillCount");
+
+    if (!container) return;
+
+    items = getArray(items);
+
+    if (count) count.textContent = items.length;
+
+    if (!items.length) {
+        container.innerHTML = `
+            <p class="empty-state">
+                No skills added yet. Add your first skill above.
+            </p>
+        `;
+        return;
+    }
+
+    container.innerHTML = items.map((item, index) => `
+        <div class="skill-admin-record">
+            <div class="skill-admin-info">
+                <h4>${escapeHTML(item.name)}</h4>
+                <span>${escapeHTML(item.category)}</span>
+                <p>${escapeHTML(item.level)}</p>
+                ${item.description
+                    ? `<small>${escapeHTML(item.description)}</small>`
+                    : ""}
+            </div>
+
+            <div class="record-buttons">
+                <button type="button" data-edit-skill="${index}">
+                    Edit
+                </button>
+
+                <button type="button"
+                    class="delete-button"
+                    data-delete-skill="${index}">
+                    Delete
+                </button>
+            </div>
+        </div>
+    `).join("");
+}
+
+function resetSkillForm() {
+    document.getElementById("skillForm")?.reset();
+
+    const index = document.getElementById("skillIndex");
+    const button = document.getElementById("skillSaveButton");
+    const cancel = document.getElementById("cancelSkill");
+
+    if (index) index.value = "";
+    if (button) button.textContent = "Save Skill";
+    if (cancel) cancel.hidden = true;
+}
+
+function editSkill(index) {
+    const item = getSkillRecords()[index];
+    if (!item) return;
+
+    document.getElementById("skillIndex").value = index;
+    document.getElementById("skillName").value = item.name || "";
+    document.getElementById("skillCategory").value = item.category || "";
+    document.getElementById("skillLevel").value = item.level || "";
+    document.getElementById("skillDescription").value =
+        item.description || "";
+
+    document.getElementById("skillSaveButton").textContent =
+        "Update Skill";
+
+    document.getElementById("cancelSkill").hidden = false;
+
+    document.getElementById("skillForm").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+async function saveSkillRecords(items) {
+    if (!(await hasAdminSession())) {
+        throw new Error("Please sign in as administrator.");
+    }
+
+    // Preserve certifications, theme and other appearance settings.
+    const updatedAppearance = {
+        ...(currentProfile?.appearance || {}),
+        skills: items
+    };
+
+    const { data, error } = await db
+        .from("profiles")
+        .update({
+            appearance: updatedAppearance,
+            updated_at: new Date().toISOString()
+        })
+        .eq("singleton", true)
+        .select()
+        .single();
+
+    if (error) throw error;
+
+    currentProfile = data;
+    renderSkillsAdmin(data.appearance?.skills || []);
+}
+
+document.getElementById("skillForm")?.addEventListener(
+    "submit",
+    async event => {
+        event.preventDefault();
+
+        const button = document.getElementById("skillSaveButton");
+
+        const name = document.getElementById("skillName").value.trim();
+        const category = document.getElementById("skillCategory").value;
+        const level = document.getElementById("skillLevel").value;
+        const description =
+            document.getElementById("skillDescription").value.trim();
+
+        const editIndex = document.getElementById("skillIndex").value;
+
+        if (!name || !category || !level) {
+            showToast("Complete the required skill fields.");
+            return;
+        }
+
+        const items = [...getSkillRecords()];
+
+        const record = {
+            name,
+            category,
+            level,
+            description
+        };
+
+        if (editIndex !== "") {
+            items[Number(editIndex)] = record;
+        } else {
+            items.push(record);
+        }
+
+        try {
+            button.disabled = true;
+            button.textContent = "Saving...";
+
+            await saveSkillRecords(items);
+
+            resetSkillForm();
+
+            showToast(
+                editIndex !== ""
+                    ? "Skill updated successfully!"
+                    : "Skill added successfully!"
+            );
+
+        } catch (error) {
+            console.error("Skill save error:", error);
+            showToast(error.message || "Unable to save skill.");
+
+        } finally {
+            button.disabled = false;
+            button.textContent = "Save Skill";
+        }
+    }
+);
+
+async function deleteSkill(index) {
+    if (!window.confirm("Are you sure you want to delete this skill?")) {
+        return;
+    }
+
+    const items = [...getSkillRecords()];
+
+    if (!items[index]) return;
+
+    items.splice(index, 1);
+
+    try {
+        await saveSkillRecords(items);
+        resetSkillForm();
+        showToast("Skill deleted successfully!");
+
+    } catch (error) {
+        console.error("Skill deletion error:", error);
+        showToast(error.message || "Unable to delete skill.");
+    }
+}
+
+document.getElementById("skillAdminList")?.addEventListener(
+    "click",
+    event => {
+        const edit = event.target.closest("[data-edit-skill]");
+        const remove = event.target.closest("[data-delete-skill]");
+
+        if (edit) {
+            editSkill(Number(edit.dataset.editSkill));
+        }
+
+        if (remove) {
+            deleteSkill(Number(remove.dataset.deleteSkill));
+        }
+    }
+);
+
+document.getElementById("cancelSkill")?.addEventListener(
+    "click",
+    resetSkillForm
+);
+
 
 // ---------------------------------------------------------
 // LOGOUT AND INITIALIZATION
