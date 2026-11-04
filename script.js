@@ -534,6 +534,66 @@ function renderPublicCertifications(certifications = []) {
 }
 
 /* =====================================
+   PUBLIC SKILLS DISPLAY
+===================================== */
+
+function renderPublicSkills(skills = []) {
+    const section = document.getElementById("skills");
+    const container = document.getElementById("skillsList");
+
+    if (!section || !container) {
+        console.error("Skills section or skillsList container not found.");
+        return;
+    }
+
+    if (!Array.isArray(skills) || skills.length === 0) {
+        section.style.display = "none";
+        return;
+    }
+
+    section.style.display = "";
+
+    const categories = {};
+
+    skills.forEach(skill => {
+        const category = skill.category || "Other Skills";
+
+        if (!categories[category]) {
+            categories[category] = [];
+        }
+
+        categories[category].push(skill);
+    });
+
+    container.innerHTML = Object.entries(categories).map(
+        ([category, items]) => `
+            <div class="skill-category">
+                <h3>${escapeHTML(category)}</h3>
+
+                <div class="skill-items">
+                    ${items.map(skill => `
+                        <article class="skill-card">
+                            <div class="skill-card-heading">
+                                <h4>${escapeHTML(skill.name || "")}</h4>
+
+                                <span class="skill-level">
+                                    ${escapeHTML(skill.level || "")}
+                                </span>
+                            </div>
+
+                            ${skill.description ? `
+                                <p>${escapeHTML(skill.description)}</p>
+                            ` : ""}
+                        </article>
+                    `).join("")}
+                </div>
+            </div>
+        `
+    ).join("");
+}
+
+
+/* =====================================
    PROFILE DISPLAY
 ===================================== */
 
@@ -584,10 +644,13 @@ function displayProfile(profile) {
     );
 
     renderExperience(profile.experience || []);
-
+    
     renderAchievements(profile.achievements || []);
     renderPublicCertifications(
     profile.appearance?.certifications || []
+);
+renderPublicSkills(
+    profile.appearance?.skills || []
 );
 
     renderSocialLinks(profile.social_links || {});
